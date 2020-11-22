@@ -26,7 +26,8 @@
     "update": "nx migrate latest",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "clean": "rimraf dist/ .cache/ node_modules/ yarn.lock yarn-error.log package-lock.json"
+    "clean": "rimraf dist/ .cache/ node_modules/ yarn.lock yarn-error.log package-lock.json",
+    "clean:api": "rimraf apps/api/volumes"
   },
   "husky": {
     "hooks": {
@@ -68,6 +69,7 @@
     "@nrwl/cli": "^10.4.0",
     "@nrwl/eslint-plugin-nx": "^10.4.1",
     "@nrwl/jest": "^10.4.4",
+    "@nrwl/linter": "^10.4.4",
     "@nrwl/tao": "^10.4.0",
     "@nrwl/workspace": "^10.4.0",
     "@types/bcryptjs": "^2.4.2",
@@ -79,7 +81,9 @@
     "dotenv": "^8.2.0",
     "eslint": "^7.13.0",
     "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.0",
     "jest": "^26.1.0",
+    "lint-staged": "^10.5.1",
     "prettier": "^2.1.2",
     "ts-jest": "^26.1.1",
     "ts-node": "^8.10.0",

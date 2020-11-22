@@ -8,25 +8,25 @@ import { classToPlain } from 'class-transformer'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 
-@Resolver('Default')
+@Resolver(UserWithTokenDto)
 export class LoginResolver {
   private readonly logger: Logger = new Logger(this.constructor.name)
 
-  constructor (
+  constructor(
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
     private jwtService: JwtService
   ) {}
 
   @Query(() => UserWithTokenDto)
-  public async login (
+  public async login(
     @Args({
       name: 'username'
     })
-      username: string,
-      @Args({
-        name: 'password'
-      })
-      password: string
+    username: string,
+    @Args({
+      name: 'password'
+    })
+    password: string
   ): Promise<UserWithTokenDto> {
     // get user from database
     const user = await this.userRepository.findOne({ username })
