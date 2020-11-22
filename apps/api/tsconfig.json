@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.base",
+  "compilerOptions": {},
+  "include": ["src", "migrations", "seeds"],
+  "exclude": ["node_modules", "**/*.spec.ts", "tests"]
+}

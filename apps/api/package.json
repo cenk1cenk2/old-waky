@@ -1,0 +1,18 @@
+{
+  "name": "@waky/api",
+  "version": "0.0.1",
+  "description": "Tailored NestJS NX Based Application Skeleton",
+  "author": "Backend <backend@webundsoehne.com>",
+  "license": "ISC",
+  "repository": "<<---REPOSITORYHERE--->>",
+  "scripts": {
+    "start": "node ./src/main.js",
+    "test": "jest --config ./test/jest.config.js --passWithNoTests",
+    "test:watch": "jest --config ./test/jest.config.js --watch --passWithNoTests",
+    "test:cov": "jest --config ./test/jest.config.js --coverage"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "implicitDependencies": {}
+}

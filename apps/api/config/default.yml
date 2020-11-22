@@ -1,0 +1,34 @@
+port: 3000
+logLevel: debug
+
+misc:
+  lockfile: maintenance.lock
+  maintenanceNotification: null
+  lastUpdateFile: .last-update
+  changelogFile: CHANGELOG.md
+
+url:
+  basePath: http://localhost:3000
+  apiPath: ''
+
+swagger:
+  path: /internal/docs
+  title: waky
+  description: API
+  useHttps: false
+
+database:
+  database: volumes/db.db
+  type: better-sqlite3
+  port: 3306
+  username: user
+  password: secret
+  synchronize: false
+  cache: false
+  keepConnectionAlive: true
+  mock:
+    database: volumes/mock.db
+  directories:
+    entity: './**/*.entity{.ts,.js}'
+    migration: migrations
+    seed: seeds

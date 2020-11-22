@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "projects": {
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@webundsoehne/nx-builders:tsc",
+          "options": {
+            "cwd": "apps/api",
+            "main": "apps/api/src/main.ts",
+            "outputPath": "dist/api",
+            "tsConfig": "apps/api/tsconfig.build.json",
+            "swapPaths": true,
+            "assets": [
+              {
+                "glob": "*",
+                "input": "apps/api/config",
+                "output": "config"
+              }
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@webundsoehne/nx-builders:ts-node-dev",
+          "options": {
+            "cwd": "apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.json",
+            "environment": {
+              "NODE_SERVICE": "server"
+            }
+          }
+        },
+        "bgtask": {
+          "builder": "@webundsoehne/nx-builders:ts-node-dev",
+          "options": {
+            "cwd": "apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.json",
+            "environment": {
+              "NODE_CONFIG_DIR": "apps/api/config/",
+              "NODE_SERVICE": "bgtask"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/api/test/jest.config.js",
+            "tsConfig": "apps/api/test/tsconfig.json",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["*.ts", "*.js"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@webundsoehne-private/nx-workspace"
+  }
+}

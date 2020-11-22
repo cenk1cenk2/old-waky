@@ -1,0 +1,44 @@
+{
+  "npmScope": "waky",
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.base.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*",
+    "**/config/**": "*",
+    "**/assets/**": "*"
+  },
+  "tasksRunnerOptions": {
+    "runner": "@nrwl/workspace/tasks-runners/default",
+    "options": {
+      "cacheDirectory": ".cache/nx",
+      "cacheableOperations": ["build", "lint", "test", "e2e"]
+    }
+  },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
+  },
+  "projects": {
+    "api": {
+      "tags": [],
+      "implicitDependencies": [],
+      "integration": {
+        "components": ["server", "bgtask"],
+        "effectiveComponents": 2,
+        "server": "graphql",
+        "database": "typeorm-mysql",
+        "tests": "jest"
+      },
+      "brownie": {
+        "containers": ["nx", "mysql"]
+      }
+    }
+  }
+}

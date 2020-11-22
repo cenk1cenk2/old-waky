@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@waky/api": ["apps/api/src/index"],
+      "@waky/api/*": ["apps/api/src/*"]
+    }
+  }
+}
