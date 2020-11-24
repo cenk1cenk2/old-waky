@@ -1,4 +1,5 @@
-import { ConfigService, LoggerService } from '@webundsoehne/nestjs-util'
+import { LoggerService } from '@waky/nestjs-logger'
+import { ConfigService } from '@webundsoehne/nestjs-util'
 import * as fs from 'fs-extra'
 import keypair from 'keypair'
 import { join } from 'path'
@@ -8,7 +9,7 @@ let ApplicationKeyInstance: ApplicationKey
 export class ApplicationKey {
   public key: string
 
-  constructor () {
+  constructor() {
     if (!ApplicationKeyInstance) {
       this.getKey()
 
@@ -18,8 +19,8 @@ export class ApplicationKey {
     return ApplicationKeyInstance
   }
 
-  private getKey (): void {
-    const logger = new LoggerService('AuthKey')
+  private getKey(): void {
+    const logger = new LoggerService({ context: 'AuthKey' })
     const keyPath = join(process.cwd(), ConfigService.get('misc.token.key') ?? './volumes/app.key')
     let key: string
 

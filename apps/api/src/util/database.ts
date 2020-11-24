@@ -1,19 +1,20 @@
 import { ConfigService } from '@webundsoehne/nestjs-util'
+import { join } from 'path'
 
 const { mock: mockOptions = {}, directories, ...options } = ConfigService.get('database')
 
 const databaseOptions = {
   ...options,
-  entities: [ directories.entity ],
-  migrations: [ `./${directories.migration}/*{.ts,.js}` ],
+  entities: [join(process.cwd(), directories.entity)],
+  migrations: [join(process.cwd(), `./${directories.migration}/*{.ts,.js}`)],
   cli: {
     entitiesDir: directories.entity,
     migrationsDir: `./${directories.migration}`
   },
-  seeds: [ `./${directories.seed}/**/*.seed{.ts,.js}` ],
-  factories: [ `./${directories.seed}/**/*.factory{.ts,.js}` ]
+  seeds: [join(process.cwd(), `./${directories.seed}/**/*.seed{.ts,.js}`)],
+  factories: [join(process.cwd(), `./${directories.seed}/**/*.factory{.ts,.js}`)]
 }
 
-export function getDatabaseOptions (mock = false) {
+export function getDatabaseOptions(mock = false) {
   return mock ? { ...databaseOptions, ...mockOptions } : databaseOptions
 }

@@ -9,10 +9,10 @@ import { ConfigService } from '@webundsoehne/nestjs-util'
   imports: [
     PassportModule.register({ session: true, defaultStrategy: 'jwt' }),
     JwtModule.register({
-      signOptions: { expiresIn: ConfigService.get('misc.token.expiry') ?? '2h' },
+      signOptions: { expiresIn: ConfigService.get('misc.token.expiry') },
       secret: new ApplicationKey().key
     })
   ],
-  exports: [ JwtModule, PassportModule ]
+  exports: [JwtModule, PassportModule]
 })
 export class GlobalModules {}

@@ -2,11 +2,12 @@ import { ForbiddenException, InternalServerErrorException, Logger } from '@nestj
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
-import { UserEntity, UserWithTokenDto } from '@waky/api/entities/user.entity'
+import { UserEntity } from '@waky/api/entities/user.entity'
 import * as bcrypt from 'bcryptjs'
-import { classToPlain } from 'class-transformer'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
+
+import { UserWithTokenDto } from './login.schema'
 
 @Resolver(UserWithTokenDto)
 export class LoginResolver {
@@ -19,22 +20,14 @@ export class LoginResolver {
 
   @Query(() => UserWithTokenDto)
   public async login(
-    @Args({
-      name: 'username'
-    })
-    username: string,
-    @Args({
-      name: 'password'
-    })
-    password: string
+    @Args({ name: 'username' }) username: string,
+    @Args({ name: 'password' }) password: string
   ): Promise<UserWithTokenDto> {
     // get user from database
     const user = await this.userRepository.findOne({ username })
 
-    console.log(user)
-
     // check if user in database exists and database password matches
-    if (!(user && bcrypt.compareSync(password, user.hash ?? ''))) {
+    if (!(user && (await bcrypt.compare(password, user.hash ?? '')))) {
       throw new ForbiddenException('Username or password does not match with any users.')
     }
 
@@ -53,7 +46,7 @@ export class LoginResolver {
     // send user without has and the token back to the user
     return {
       token,
-      ...classToPlain(user)
-    } as UserWithTokenDto
+      username: user.username
+    }
   }
 }

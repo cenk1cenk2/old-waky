@@ -39,6 +39,9 @@
       "brownie": {
         "containers": ["nx", "mysql"]
       }
+    },
+    "nestjs-logger": {
+      "tags": []
     }
   }
 }

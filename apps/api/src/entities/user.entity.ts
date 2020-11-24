@@ -8,7 +8,7 @@ import { BaseEntity } from './util'
 
 @ObjectType()
 @Entity('Users')
-@Unique([ 'username' ])
+@Unique(['username'])
 export class UserEntity extends BaseEntity<UserEntity> {
   @Column('varchar', {
     unique: true,
@@ -18,31 +18,27 @@ export class UserEntity extends BaseEntity<UserEntity> {
   @IsString({ always: true })
   @MaxLength(32)
   @IsNotEmpty()
-  @IsOptional({ groups: [ 'update' ] })
+  @IsOptional({ groups: ['update'] })
   @Field({ nullable: false })
   username?: string
 
-  @Column('varchar', { nullable: false, select: false })
+  @IsString({ always: true })
+  @Column('varchar', { nullable: false })
   @Exclude({ toPlainOnly: true })
-  @Field({ nullable: false })
+  @IsNotEmpty()
+  @Field({ nullable: true })
   hash?: string
 
   password?: string
 
   @BeforeInsert()
   @BeforeUpdate()
-  public encryptPassword (): void {
+  public async encryptPassword(): Promise<void> {
     if (this.password) {
-      this.hash = bcrypt.hashSync(this.password)
+      this.hash = await bcrypt.hash(this.password, 10)
       delete this.password
     }
   }
-}
-
-@ObjectType()
-export class UserWithTokenDto extends UserEntity {
-  @Field({ nullable: false })
-  token?: string
 }
 
 @ObjectType()
@@ -51,7 +47,7 @@ export class UserWithPasswordDto extends UserEntity {
   @MaxLength(32)
   @MinLength(6)
   @IsNotEmpty()
-  @IsOptional({ groups: [ 'update' ] })
+  @IsOptional({ groups: ['update'] })
   @Field({ nullable: true })
   password?: string
 }

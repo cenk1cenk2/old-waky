@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@waky/api": ["apps/api/src/index"],
-      "@waky/api/*": ["apps/api/src/*"]
+      "@waky/api/*": ["apps/api/src/*"],
+      "@waky/nestjs-logger": ["libs/nestjs-logger/src/index.ts"]
     }
   }
 }

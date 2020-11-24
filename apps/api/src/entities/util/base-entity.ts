@@ -30,7 +30,7 @@ export abstract class BaseEntity<T> {
   @VersionColumn()
   version?: number
 
-  constructor (object: T & BaseEntity<T>) {
+  constructor(object: Partial<T & BaseEntity<T>>) {
     Object.assign(this, object)
   }
 }

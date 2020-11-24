@@ -3,9 +3,11 @@ logLevel: debug
 
 misc:
   lockfile: maintenance.lock
-  maintenanceNotification: null
+  maintenanceNotification: "API in maintenance mode."
   lastUpdateFile: .last-update
   changelogFile: CHANGELOG.md
+  token:
+    expiry: 1h
 
 url:
   basePath: http://localhost:3000
@@ -26,9 +28,14 @@ database:
   synchronize: false
   cache: false
   keepConnectionAlive: true
+  autoLoadEntities: true
   mock:
     database: volumes/mock.db
   directories:
-    entity: './**/*.entity{.ts,.js}'
+    entity: '**/*.entity{.ts,.js}'
     migration: migrations
     seed: seeds
+
+defaults:
+  username: admin
+  password: admin

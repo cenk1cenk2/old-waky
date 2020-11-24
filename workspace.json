@@ -62,6 +62,27 @@
           }
         }
       }
+    },
+    "nestjs-logger": {
+      "root": "libs/nestjs-logger",
+      "sourceRoot": "libs/nestjs-logger/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/nestjs-logger/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/nestjs-logger/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

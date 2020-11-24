@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "rvest.vs-code-prettier-eslint",
-    "nrwl.angular-console"
+    "nrwl.angular-console",
+    "firsttris.vscode-jest-runner"
   ]
 }
