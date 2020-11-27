@@ -1,21 +1,27 @@
-import { ForbiddenException, InternalServerErrorException, Logger } from '@nestjs/common'
-import { Args, Query, Resolver } from '@nestjs/graphql'
+import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
+import { ForbiddenException, Inject, InternalServerErrorException, Logger } from '@nestjs/common'
+import { Args, CONTEXT, GraphQLExecutionContext, Query, Resolver } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserEntity } from '@waky/api/entities/user.entity'
+import { Events, EventTypes } from '@waky/api/interfaces/emitter.interface'
+import { Public } from '@waky/nestjs-common'
 import * as bcrypt from 'bcryptjs'
+import { NestEventEmitter } from 'nest-event'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
-
 import { UserWithTokenDto } from './login.schema'
 
+@Public()
 @Resolver(UserWithTokenDto)
 export class LoginResolver {
   private readonly logger: Logger = new Logger(this.constructor.name)
 
   constructor(
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-    private jwtService: JwtService
+    @Inject(CONTEXT) private readonly context: GraphQLContext,
+    private jwtService: JwtService,
+    private readonly emitter: NestEventEmitter
   ) {}
 
   @Query(() => UserWithTokenDto)
@@ -42,6 +48,8 @@ export class LoginResolver {
         'There was an error while creating a session for user. Please try again later.'
       )
     }
+
+    this.emitter.strictEmitter<EventTypes>().emit(Events.USER_LOGIN, this.context.req, token)
 
     // send user without has and the token back to the user
     return {

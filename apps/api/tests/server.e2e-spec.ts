@@ -9,10 +9,10 @@ describe('ServerController (e2e)', () => {
   beforeAll(async () => {
     const ServerModule = createServerModule(true)
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [ ServerModule ]
+      imports: [ServerModule]
     }).compile()
 
-    app = moduleFixture.createNestApplication(new FastifyAdapter(), { logger: [ 'error' ] })
+    app = moduleFixture.createNestApplication(new FastifyAdapter(), { logger: ['error'] })
     await app.init()
   })
 

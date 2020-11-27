@@ -12,7 +12,7 @@ CrudConfigService.load({
     cache: false
   },
   routes: {
-    exclude: [ 'createManyBase' ],
+    exclude: ['createManyBase'],
     deleteOneBase: {
       returnDeleted: false
     }

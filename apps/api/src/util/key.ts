@@ -1,8 +1,9 @@
-import { LoggerService } from '@waky/nestjs-logger'
 import { ConfigService } from '@webundsoehne/nestjs-util'
 import * as fs from 'fs-extra'
 import keypair from 'keypair'
 import { join } from 'path'
+
+import { LoggerService } from '@waky/nestjs-common'
 
 let ApplicationKeyInstance: ApplicationKey
 

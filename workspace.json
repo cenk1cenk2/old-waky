@@ -63,22 +63,22 @@
         }
       }
     },
-    "nestjs-logger": {
-      "root": "libs/nestjs-logger",
-      "sourceRoot": "libs/nestjs-logger/src",
+    "nestjs-common": {
+      "root": "libs/nestjs-common",
+      "sourceRoot": "libs/nestjs-common/src",
       "projectType": "library",
       "schematics": {},
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/nestjs-logger/**/*.ts"]
+            "lintFilePatterns": ["libs/nestjs-common/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/nestjs-logger/jest.config.js",
+            "jestConfig": "libs/nestjs-common/jest.config.js",
             "passWithNoTests": true
           }
         }

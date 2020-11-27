@@ -1,8 +1,10 @@
-import { Global, Module } from '@nestjs/common'
+import { Module, Global } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
-import { ApplicationKey } from '@waky/api/util/key'
 import { ConfigService } from '@webundsoehne/nestjs-util'
+
+import { JwtStrategy } from '@waky/api/guards/jwt.strategy'
+import { ApplicationKey } from '@waky/api/util/key'
 
 @Global()
 @Module({
@@ -13,6 +15,7 @@ import { ConfigService } from '@webundsoehne/nestjs-util'
       secret: new ApplicationKey().key
     })
   ],
-  exports: [JwtModule, PassportModule]
+  providers: [JwtStrategy],
+  exports: [JwtStrategy, JwtModule, PassportModule]
 })
-export class GlobalModules {}
+export class AuthGuardModule {}

@@ -1,0 +1,4 @@
+helpers:docker:
+  nx:
+    configuration:
+      c0f3e951-4a52-42d5-80db-9de2e323069e: .docker/nx/.env

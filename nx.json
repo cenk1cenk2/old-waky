@@ -37,10 +37,10 @@
         "tests": "jest"
       },
       "brownie": {
-        "containers": ["nx", "mysql"]
+        "containers": ["nx"]
       }
     },
-    "nestjs-logger": {
+    "nestjs-common": {
       "tags": []
     }
   }

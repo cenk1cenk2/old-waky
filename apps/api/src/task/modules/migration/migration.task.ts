@@ -9,13 +9,13 @@ import { Connection } from 'typeorm'
 export class MigrationTask extends NestSchedule {
   private readonly logger: Logger = new Logger(this.constructor.name)
 
-  constructor (@InjectConnection() private readonly connection: Connection) {
+  constructor(@InjectConnection() private readonly connection: Connection) {
     super()
   }
 
   @Timeout(0, TimeoutTaskDefaults)
   @UseLocker(MaintenanceLocker)
-  public async migrate (): Promise<void> {
+  public async migrate(): Promise<void> {
     try {
       await this.connection.runMigrations({ transaction: 'all' })
     } catch (error) {
