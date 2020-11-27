@@ -58,7 +58,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["*.ts", "*.js"]
+            "lintFilePatterns": ["apps/api/**/*.ts"]
           }
         }
       }

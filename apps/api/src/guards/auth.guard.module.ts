@@ -15,7 +15,7 @@ import { ApplicationKey } from '@waky/api/util/key'
       secret: new ApplicationKey().key
     })
   ],
-  providers: [JwtStrategy],
-  exports: [JwtStrategy, JwtModule, PassportModule]
+  providers: [ JwtStrategy ],
+  exports: [ JwtStrategy, JwtModule, PassportModule ]
 })
 export class AuthGuardModule {}

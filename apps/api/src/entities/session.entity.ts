@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { DecodedToken } from '@waky/api/interfaces/decoded-token.interface'
 import { Exclude } from 'class-transformer'
 import { IsNotEmpty } from 'class-validator'
 import { Column, Entity, ObjectID } from 'typeorm'
+
 import { BaseEntity } from './util'
+import { DecodedToken } from '@waky/api/interfaces/decoded-token.interface'
 
 @Entity('Sessions')
 export class SessionEntity extends BaseEntity<SessionEntity> implements DecodedToken {

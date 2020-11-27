@@ -5,13 +5,13 @@ import { DefaultSchema } from './default.schema'
 @Resolver('Default')
 export class DefaultResolver {
   @Query(() => DefaultSchema)
-  public hello(
+  public hello (
     @Args({
       name: 'name',
       nullable: true,
       defaultValue: 'world'
     })
-    name: string
+      name: string
   ): DefaultSchema {
     return { response: `Hello ${name}.` }
   }

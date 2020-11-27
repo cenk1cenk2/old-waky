@@ -10,7 +10,7 @@ let ApplicationKeyInstance: ApplicationKey
 export class ApplicationKey {
   public key: string
 
-  constructor() {
+  constructor () {
     if (!ApplicationKeyInstance) {
       this.getKey()
 
@@ -20,7 +20,7 @@ export class ApplicationKey {
     return ApplicationKeyInstance
   }
 
-  private getKey(): void {
+  private getKey (): void {
     const logger = new LoggerService({ context: 'AuthKey' })
     const keyPath = join(process.cwd(), ConfigService.get('misc.token.key') ?? './volumes/app.key')
     let key: string

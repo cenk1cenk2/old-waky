@@ -24,7 +24,7 @@ import { ApplicationAuthGuard } from '@waky/api/guards/auth.guard'
 import { AuthGuardModule } from '@waky/api/guards/auth.guard.module'
 import { createTaskModule } from '@waky/api/task/task.module'
 
-export function createServerModule(mock = false): new (mock: boolean) => NestModule {
+export function createServerModule (mock = false): new (mock: boolean) => NestModule {
   @Module({
     providers: [
       ConfigService,
@@ -66,7 +66,7 @@ export function createServerModule(mock = false): new (mock: boolean) => NestMod
     ]
   })
   class ServerModule implements NestModule {
-    async configure(consumer: MiddlewareConsumer): Promise<void> {
+    async configure (consumer: MiddlewareConsumer): Promise<void> {
       await setEnvironmentVariables()
 
       consumer

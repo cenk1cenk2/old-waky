@@ -8,7 +8,7 @@ import { BaseEntity } from './util'
 
 @ObjectType()
 @Entity('Users')
-@Unique(['username'])
+@Unique([ 'username' ])
 export class UserEntity extends BaseEntity<UserEntity> {
   @Column('varchar', {
     unique: true,
@@ -18,7 +18,7 @@ export class UserEntity extends BaseEntity<UserEntity> {
   @IsString({ always: true })
   @MaxLength(32)
   @IsNotEmpty()
-  @IsOptional({ groups: ['update'] })
+  @IsOptional({ groups: [ 'update' ] })
   @Field({ nullable: false })
   username?: string
 
@@ -33,7 +33,7 @@ export class UserEntity extends BaseEntity<UserEntity> {
 
   @BeforeInsert()
   @BeforeUpdate()
-  public async encryptPassword(): Promise<void> {
+  public async encryptPassword (): Promise<void> {
     if (this.password) {
       this.hash = await bcrypt.hash(this.password, 10)
       delete this.password
@@ -47,7 +47,7 @@ export class UserWithPasswordDto extends UserEntity {
   @MaxLength(32)
   @MinLength(6)
   @IsNotEmpty()
-  @IsOptional({ groups: ['update'] })
+  @IsOptional({ groups: [ 'update' ] })
   @Field({ nullable: true })
   password?: string
 }

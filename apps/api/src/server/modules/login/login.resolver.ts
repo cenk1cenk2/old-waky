@@ -1,23 +1,24 @@
-import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
 import { ForbiddenException, Inject, InternalServerErrorException, Logger } from '@nestjs/common'
-import { Args, CONTEXT, GraphQLExecutionContext, Query, Resolver } from '@nestjs/graphql'
+import { Args, CONTEXT, Query, Resolver } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
-import { UserEntity } from '@waky/api/entities/user.entity'
-import { Events, EventTypes } from '@waky/api/interfaces/emitter.interface'
-import { Public } from '@waky/nestjs-common'
 import * as bcrypt from 'bcryptjs'
 import { NestEventEmitter } from 'nest-event'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
+
 import { UserWithTokenDto } from './login.schema'
+import { UserEntity } from '@waky/api/entities/user.entity'
+import { Events, EventTypes } from '@waky/api/interfaces/emitter.interface'
+import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
+import { Public } from '@waky/nestjs-common'
 
 @Public()
 @Resolver(UserWithTokenDto)
 export class LoginResolver {
   private readonly logger: Logger = new Logger(this.constructor.name)
 
-  constructor(
+  constructor (
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
     @Inject(CONTEXT) private readonly context: GraphQLContext,
     private jwtService: JwtService,
@@ -25,15 +26,15 @@ export class LoginResolver {
   ) {}
 
   @Query(() => UserWithTokenDto)
-  public async login(
+  public async login (
     @Args({ name: 'username' }) username: string,
-    @Args({ name: 'password' }) password: string
+      @Args({ name: 'password' }) password: string
   ): Promise<UserWithTokenDto> {
     // get user from database
     const user = await this.userRepository.findOne({ username })
 
     // check if user in database exists and database password matches
-    if (!(user && (await bcrypt.compare(password, user.hash ?? '')))) {
+    if (!(user && await bcrypt.compare(password, user.hash ?? ''))) {
       throw new ForbiddenException('Username or password does not match with any users.')
     }
 

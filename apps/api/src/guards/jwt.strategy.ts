@@ -8,7 +8,7 @@ import { ApplicationKey } from '@waky/api/util/key'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor() {
+  constructor () {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -17,9 +17,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     })
   }
 
-  public async validate(req: FastifyRequest, payload: DecodedToken, done: VerifiedCallback): Promise<void> {
+  public async validate (req: FastifyRequest, payload: DecodedToken, done: VerifiedCallback): Promise<void> {
     // await this.sessionsService.verifyUserSession(payload)
-    console.log('strategy')
     throw new Error('anan')
     return done(null, payload)
   }
