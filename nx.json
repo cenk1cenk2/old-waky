@@ -42,6 +42,9 @@
     },
     "nestjs-common": {
       "tags": []
+    },
+    "frontend": {
+      "tags": []
     }
   }
 }

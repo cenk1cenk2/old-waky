@@ -4,8 +4,10 @@ logLevel: LOG_LEVEL
 misc:
   lockfile: MAINTENANCE_LOCKFILE
   maintenanceNotification: MAINTENANCE_MESSAGE
-  token:
-    expiry: TOKEN_EXPIRY_LENGTH
+
+token:
+  expiry: TOKEN_EXPIRY_LENGTH
+
 url:
   basePath: BASE_URL
   apiPath: API_BASE_PATH

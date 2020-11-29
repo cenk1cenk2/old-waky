@@ -1,2 +1,5 @@
+token:
+  bits: 16
+
 database:
   synchronize: true

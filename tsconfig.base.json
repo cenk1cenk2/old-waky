@@ -4,7 +4,9 @@
     "paths": {
       "@waky/api": ["apps/api/src/index"],
       "@waky/api/*": ["apps/api/src/*"],
-      "@waky/nestjs-common": ["libs/nestjs-common/src/index"]
+      "@waky/nestjs-common": ["libs/nestjs-common/src/index"],
+      "@frontend-assets/*": ["apps/frontend/assets/*"],
+      "@waky/frontend/*": ["apps/frontend/src/*"]
     }
   }
 }

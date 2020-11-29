@@ -12,7 +12,7 @@
           "options": {
             "cwd": "apps/api",
             "main": "apps/api/src/main.ts",
-            "outputPath": "dist/api",
+            "outputPath": "dist",
             "tsConfig": "apps/api/tsconfig.build.json",
             "swapPaths": true,
             "assets": [
@@ -20,30 +20,26 @@
                 "glob": "*",
                 "input": "apps/api/config",
                 "output": "config"
+              },
+              {
+                "glob": "CHANGELOG.md",
+                "input": ".",
+                "output": "."
               }
             ]
           }
         },
         "serve": {
-          "builder": "@webundsoehne/nx-builders:ts-node-dev",
+          "builder": "@webundsoehne/nx-builders:execute",
           "options": {
-            "cwd": "apps/api",
-            "main": "apps/api/src/main.ts",
-            "tsConfig": "apps/api/tsconfig.json",
-            "environment": {
-              "NODE_SERVICE": "server"
-            }
-          }
-        },
-        "bgtask": {
-          "builder": "@webundsoehne/nx-builders:ts-node-dev",
-          "options": {
-            "cwd": "apps/api",
-            "main": "apps/api/src/main.ts",
-            "tsConfig": "apps/api/tsconfig.json",
-            "environment": {
-              "NODE_CONFIG_DIR": "apps/api/config/",
-              "NODE_SERVICE": "bgtask"
+            "buildTarget": "api:build",
+            "inject": {
+              "runAfterWatch": "yarn dev:start",
+              "sourceMap": true,
+              "tsConfig": "apps/api/tsconfig.json",
+              "environment": {
+                "NODE_ENV": "develop"
+              }
             }
           }
         },
@@ -83,9 +79,105 @@
           }
         }
       }
+    },
+    "frontend": {
+      "root": "apps/frontend",
+      "sourceRoot": "apps/frontend/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "cwd": "apps/frontend/",
+            "outputPath": "dist/static",
+            "index": "apps/frontend/public/index.html",
+            "main": "apps/frontend/src/main.tsx",
+            "polyfills": "apps/frontend/src/polyfills.ts",
+            "tsConfig": "apps/frontend/tsconfig.json",
+            "sourceMap": true,
+            "assets": [
+              {
+                "glob": "favicon.ico",
+                "input": "apps/frontend/public",
+                "output": "."
+              },
+              {
+                "glob": "*",
+                "input": "apps/frontend/assets",
+                "output": "assets"
+              }
+            ],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "apps/frontend/webpack.config.js"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "frontend:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "frontend:build:production",
+              "host": "0.0.0.0",
+              "hot": true
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/frontend/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/frontend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
     "defaultCollection": "@webundsoehne-private/nx-workspace"
-  }
+  },
+  "schematics": {
+    "@nrwl/react": {
+      "application": {
+        "style": "styled-jsx",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "styled-jsx"
+      },
+      "library": {
+        "style": "styled-jsx",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "frontend"
 }

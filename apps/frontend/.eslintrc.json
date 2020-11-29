@@ -1,0 +1,6 @@
+{
+  "extends": ["../../.eslintrc.json", "@cenk1cenk2/eslint-config/react-typescript"],
+  "rules": {
+    "no-undef": "off"
+  }
+}

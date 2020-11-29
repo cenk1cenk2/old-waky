@@ -1,6 +1,8 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common'
 import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core'
+import { EventEmitterModule } from '@nestjs/event-emitter'
 import { GraphQLModule } from '@nestjs/graphql'
+import { ServeStaticModule } from '@nestjs/serve-static'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import {
   BadRequestExceptionFilter,
@@ -13,7 +15,6 @@ import {
   SetApiInfoHeaderMiddleware,
   setEnvironmentVariables
 } from '@webundsoehne/nestjs-util'
-import { NestEventModule } from 'nest-event'
 import { join } from 'path'
 
 import { getDatabaseOptions } from '../util/database'
@@ -53,16 +54,19 @@ export function createServerModule (mock = false): new (mock: boolean) => NestMo
         useGlobalPrefix: true,
         playground: true,
         introspection: true,
-        path: '/'
+        path: '/graphql'
       }),
       ...Object.values(modules),
       TypeOrmModule.forRoot(getDatabaseOptions(mock)),
       InternalModule,
       MaintenanceModule,
-      NestEventModule,
+      EventEmitterModule.forRoot(),
       createTaskModule(),
       AuthGuardModule,
-      SessionModule
+      SessionModule,
+      ServeStaticModule.forRoot({
+        rootPath: join(process.cwd(), ConfigService.get('frontend.dir'))
+      })
     ]
   })
   class ServerModule implements NestModule {

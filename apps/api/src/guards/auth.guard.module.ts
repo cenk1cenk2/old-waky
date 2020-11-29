@@ -1,4 +1,4 @@
-import { Module, Global } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { ConfigService } from '@webundsoehne/nestjs-util'
@@ -11,7 +11,7 @@ import { ApplicationKey } from '@waky/api/util/key'
   imports: [
     PassportModule.register({ session: true, defaultStrategy: 'jwt' }),
     JwtModule.register({
-      signOptions: { expiresIn: ConfigService.get('misc.token.expiry') },
+      signOptions: { expiresIn: ConfigService.get('token.expiry', '1h') },
       secret: new ApplicationKey().key
     })
   ],

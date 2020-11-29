@@ -1,16 +1,17 @@
 import { ForbiddenException, Inject, InternalServerErrorException, Logger } from '@nestjs/common'
+import { EventEmitter2 } from '@nestjs/event-emitter'
 import { Args, CONTEXT, Query, Resolver } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcryptjs'
-import { NestEventEmitter } from 'nest-event'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 
 import { UserWithTokenDto } from './login.schema'
 import { UserEntity } from '@waky/api/entities/user.entity'
-import { Events, EventTypes } from '@waky/api/interfaces/emitter.interface'
+import { Events } from '@waky/api/interfaces/emitter.interface'
 import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
+import { emitter } from '@waky/api/util/emitter'
 import { Public } from '@waky/nestjs-common'
 
 @Public()
@@ -22,7 +23,7 @@ export class LoginResolver {
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
     @Inject(CONTEXT) private readonly context: GraphQLContext,
     private jwtService: JwtService,
-    private readonly emitter: NestEventEmitter
+    private readonly emitter: EventEmitter2
   ) {}
 
   @Query(() => UserWithTokenDto)
@@ -42,15 +43,12 @@ export class LoginResolver {
     const token = this.jwtService.sign({ id: user.id, key: uuidv4() })
 
     try {
-      // await this.sessionsService.saveUserSession(request, token)
+      await emitter(this.emitter, Events.USER_LOGIN, { req: this.context.req, token })
     } catch (e) {
-      this.logger.debug(e)
       throw new InternalServerErrorException(
-        'There was an error while creating a session for user. Please try again later.'
+        `There was an error while creating a session for user. Please try again later. ${e}`
       )
     }
-
-    this.emitter.strictEmitter<EventTypes>().emit(Events.USER_LOGIN, this.context.req, token)
 
     // send user without has and the token back to the user
     return {

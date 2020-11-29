@@ -6,7 +6,8 @@
   "license": "ISC",
   "repository": "<<---REPOSITORYHERE--->>",
   "scripts": {
-    "start": "node ./src/main.js",
+    "start": "node ./apps/api/src/main.js",
+    "dev:start": "node -r source-map-support/register ./apps/api/src/main.js",
     "test": "jest --config ./test/jest.config.js --passWithNoTests",
     "test:watch": "jest --config ./test/jest.config.js --watch --passWithNoTests",
     "test:cov": "jest --config ./test/jest.config.js --coverage"

@@ -1,17 +1,23 @@
 port: 3000
 logLevel: debug
 
+url:
+  basePath: http://localhost:3000
+  apiPath: ''
+
 misc:
   lockfile: maintenance.lock
   maintenanceNotification: "API in maintenance mode."
   lastUpdateFile: .last-update
   changelogFile: CHANGELOG.md
-  token:
-    expiry: 1h
 
-url:
-  basePath: http://localhost:3000
-  apiPath: ''
+token:
+  expiry: 1h
+  key: ./volumes/app.key
+  bits: 128
+
+frontend:
+  dir: static
 
 swagger:
   path: /internal/docs

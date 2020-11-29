@@ -22,7 +22,7 @@ export class ApplicationKey {
 
   private getKey (): void {
     const logger = new LoggerService({ context: 'AuthKey' })
-    const keyPath = join(process.cwd(), ConfigService.get('misc.token.key') ?? './volumes/app.key')
+    const keyPath = join(process.cwd(), ConfigService.get('token.key', './volumes/app.key'))
     let key: string
 
     try {
@@ -31,17 +31,17 @@ export class ApplicationKey {
     } catch (e) {
       try {
         logger.warn('Application key not found generating a new one.')
-
-        const { private: key } = keypair({ bits: 256 })
+        ;({ private: key } = keypair({ bits: ConfigService.get('token.bits', 128) }))
 
         fs.ensureFileSync(keyPath)
         fs.writeFileSync(keyPath, key)
+
         logger.debug('Application key generated.')
       } catch (e) {
         logger.error('Unable to generate application key.')
       }
+    } finally {
+      this.key = key
     }
-
-    this.key = key
   }
 }
