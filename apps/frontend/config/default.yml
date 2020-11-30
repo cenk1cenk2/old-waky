@@ -1,3 +1,5 @@
 package:
   name: waky
   version: 1.0.0-development
+api:
+  url: http://localhost:3000/graphql

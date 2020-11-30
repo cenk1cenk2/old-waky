@@ -12,7 +12,8 @@
     "../../node_modules/@cenk1cenk2/react-template-base/types/styled-components.d.ts",
     "../../node_modules/@cenk1cenk2/react-template-base/types/recoil.d.ts",
     "../../node_modules/@cenk1cenk2/react-template-base/types/react.d.ts",
-    "./types/config.d.ts"
+    "./types/config.d.ts",
+    "./types/graphql.d.ts"
   ],
   "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
 }

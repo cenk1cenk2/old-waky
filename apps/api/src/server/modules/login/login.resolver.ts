@@ -1,6 +1,6 @@
 import { ForbiddenException, Inject, InternalServerErrorException, Logger } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
-import { Args, CONTEXT, Query, Resolver } from '@nestjs/graphql'
+import { Args, CONTEXT, Mutation, Resolver } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcryptjs'
@@ -26,7 +26,7 @@ export class LoginResolver {
     private readonly emitter: EventEmitter2
   ) {}
 
-  @Query(() => UserWithTokenDto)
+  @Mutation(() => UserWithTokenDto)
   public async login (
     @Args({ name: 'username' }) username: string,
       @Args({ name: 'password' }) password: string

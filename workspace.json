@@ -147,13 +147,42 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/frontend/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": ["apps/frontend/src/**/*.{ts,tsx,js,jsx}", "apps/frontend/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/frontend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "client-types": {
+      "root": "libs/client-types",
+      "sourceRoot": "libs/client-types/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "serve": {
+          "builder": "@webundsoehne/nx-builders:ts-node-dev",
+          "options": {
+            "cwd": "libs/client-types/",
+            "main": "libs/client-types/src/run.ts",
+            "tsConfig": "libs/client-types/tsconfig.json"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/client-types/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-types/jest.config.js",
             "passWithNoTests": true
           }
         }

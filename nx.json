@@ -45,6 +45,9 @@
     },
     "frontend": {
       "tags": []
+    },
+    "client-types": {
+      "tags": []
     }
   }
 }
