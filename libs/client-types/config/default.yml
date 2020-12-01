@@ -1,1 +1,3 @@
-schema: ../../dist/.graphql/schema.gql
+schema:
+  - from: ../../apps/api/.graphql/schema.gql
+    to: index.ts

@@ -30,17 +30,11 @@
           }
         },
         "serve": {
-          "builder": "@webundsoehne/nx-builders:execute",
+          "builder": "@webundsoehne/nx-builders:ts-node-dev",
           "options": {
-            "buildTarget": "api:build",
-            "inject": {
-              "runAfterWatch": "yarn dev:start",
-              "sourceMap": true,
-              "tsConfig": "apps/api/tsconfig.json",
-              "environment": {
-                "NODE_ENV": "develop"
-              }
-            }
+            "cwd": "apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.build.json"
           }
         },
         "test": {
