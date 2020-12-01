@@ -10,17 +10,16 @@ import { Form, Formik } from 'formik'
 import React, { Fragment, useState } from 'react'
 import { useTheme } from 'styled-components'
 
-import { LoginForm } from './login.interface'
 import { loginValidationSchema } from './login.util'
 
 export const LoginPage: React.FC = () => {
   const theme = useTheme()
-  const [ credentials, setCredentials ] = useState<LoginForm>({ username: '', password: '' })
+  const [ credentials, setCredentials ] = useState<MutationLoginArgs>({ username: '', password: '' })
   const [ message, setMessage ] = useState<React.FC>(DefaultMessage)
   const [ submitted, setSubmitted ] = useState<boolean>(false)
   const [ login ] = useMutation<Mutation['login'], MutationLoginArgs>(ClientQueryMap[ClientQuery.USER_LOGIN])
 
-  const handleSubmit = async ({ username, password }: LoginForm) => {
+  const handleSubmit = async ({ username, password }: MutationLoginArgs) => {
     // setSubmitted(true)
     const { data, errors, context, extensions } = await login({ variables: { username, password } })
 
