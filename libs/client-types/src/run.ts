@@ -15,10 +15,10 @@ async function bootstrap (): Promise<unknown> {
   return generate(
     {
       watch: true,
-      watchConfig: {
-        usePolling: true,
-        interval: 1000
-      },
+      // watchConfig: {
+      //   usePolling: true,
+      //   interval: 3000
+      // },
       schema,
       generates: {
         'src/index.ts': {

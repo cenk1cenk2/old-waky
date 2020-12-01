@@ -1,12 +1,12 @@
-import { gql, useQuery, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Pulldown } from '@cenk1cenk2/react-template-components'
-import { faUser, faKey } from '@fortawesome/free-solid-svg-icons'
+import { faKey, faUser } from '@fortawesome/free-solid-svg-icons'
 import { ReactComponent as LogoImage } from '@frontend-assets/img/logo/logo.svg'
-import { Grid, Box, Button, Typography } from '@material-ui/core'
-import { Mutation } from '@waky/client-types'
+import { Box, Button, Grid, Typography } from '@material-ui/core'
+import { Mutation, MutationLoginArgs } from '@waky/client-types'
 import { TextField } from '@waky/frontend/components/input/text-field.component'
-import { ClientQueryMap, ClientQuery } from '@waky/frontend/utils'
-import { Formik, Form } from 'formik'
+import { ClientQuery, ClientQueryMap } from '@waky/frontend/utils'
+import { Form, Formik } from 'formik'
 import React, { Fragment, useState } from 'react'
 import { useTheme } from 'styled-components'
 
@@ -18,7 +18,7 @@ export const LoginPage: React.FC = () => {
   const [ credentials, setCredentials ] = useState<LoginForm>({ username: '', password: '' })
   const [ message, setMessage ] = useState<React.FC>(DefaultMessage)
   const [ submitted, setSubmitted ] = useState<boolean>(false)
-  const [ login ] = useMutation<Mutation['login']>(ClientQueryMap[ClientQuery.USER_LOGIN])
+  const [ login ] = useMutation<Mutation['login'], MutationLoginArgs>(ClientQueryMap[ClientQuery.USER_LOGIN])
 
   const handleSubmit = async ({ username, password }: LoginForm) => {
     // setSubmitted(true)
