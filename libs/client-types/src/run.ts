@@ -5,11 +5,11 @@ import delay from 'delay'
 import * as fs from 'fs-extra'
 import { join } from 'path'
 
-async function bootstrap (): Promise<unknown> {
+async function bootstrap (): Promise<unknown[]> {
   const schema = config.get<Schema[]>('schema')
   let status: Status[] = getStatus(schema)
 
-  while (getStatus(schema).some((v) => v.status === false)) {
+  while (status.some((v) => v.status === false)) {
     console.error(
       `Schema files is not generated yet: ${status
         .filter((s) => !s.status)
