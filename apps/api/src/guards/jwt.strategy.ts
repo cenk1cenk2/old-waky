@@ -19,7 +19,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   public async validate (req: FastifyRequest, payload: DecodedToken, done: VerifiedCallback): Promise<void> {
     // await this.sessionsService.verifyUserSession(payload)
+    console.log('test')
     throw new Error('anan')
+
     return done(null, payload)
   }
 }

@@ -23,7 +23,7 @@ export const LoginPage: React.FC = () => {
     // setSubmitted(true)
     const { data, errors, context, extensions } = await login({ variables: { username, password } })
 
-    // console.log(data, errors, context, extensions)
+    console.log(data, errors, context, extensions)
   }
 
   return (

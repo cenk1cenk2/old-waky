@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   nx:
-    image: cenk1cenk2/lerna-dev:14
+    image: cenk1cenk2/lerna-dev:latest
     env_file: ./.docker/nx/.env
     ports:
       - 3000-3020:3000-3020

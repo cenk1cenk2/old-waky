@@ -36,10 +36,11 @@ export class SessionHandler {
     const location = geo.lookup(ip)
 
     // generate user session details
-    const sessionDetails = {
+    const sessionDetails: Partial<SessionEntity> = {
       ip,
       geo: location?.city && location?.country ? `${location.city}/${location.country}` : 'unknown',
-      browser: `${uaOs.name} ${uaOs.version} ${uaBrowser.name} ${uaBrowser.version}`
+      browser: `${uaBrowser.name} ${uaBrowser.version}`,
+      os: `${uaOs.name}/${uaOs.version}`
     }
 
     const session = new SessionEntity({

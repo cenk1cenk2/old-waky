@@ -6,7 +6,7 @@ import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
 
 // add RequestGenericInterface back with Fastify3
 export async function graphQLContextParser ({ req }: { req: FastifyRequest<any> }): Promise<GraphQLContext> {
-  return { ...req }
+  return { req }
 }
 
 export function graphQLErrorParser (exception: GraphQLError): GraphQLFormattedError<Record<string, any>> {
