@@ -7,7 +7,8 @@ import * as bcrypt from 'bcryptjs'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 
-import { UserWithTokenDto } from './login.schema'
+import { LoginInput } from './login.input'
+import { LoginOutput } from './login.output'
 import { UserEntity } from '@waky/api/entities/user.entity'
 import { Events } from '@waky/api/interfaces/emitter.interface'
 import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
@@ -15,7 +16,7 @@ import { emitter } from '@waky/api/util/emitter'
 import { Public } from '@waky/nestjs-common'
 
 @Public()
-@Resolver(UserWithTokenDto)
+@Resolver(LoginOutput)
 export class LoginResolver {
   private readonly logger: Logger = new Logger(this.constructor.name)
 
@@ -26,16 +27,13 @@ export class LoginResolver {
     private readonly emitter: EventEmitter2
   ) {}
 
-  @Mutation(() => UserWithTokenDto)
-  public async login (
-    @Args({ name: 'username' }) username: string,
-      @Args({ name: 'password' }) password: string
-  ): Promise<UserWithTokenDto> {
+  @Mutation(() => LoginOutput)
+  public async login (@Args() args: LoginInput): Promise<LoginOutput> {
     // get user from database
-    const user = await this.userRepository.findOne({ username })
+    const user = await this.userRepository.findOneOrFail({ username: args.username })
 
     // check if user in database exists and database password matches
-    if (!(user && await bcrypt.compare(password, user.hash ?? ''))) {
+    if (!(user && await bcrypt.compare(args.password, user.hash ?? ''))) {
       throw new ForbiddenException('Username or password does not match with any users.')
     }
 

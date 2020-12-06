@@ -29,6 +29,7 @@ export class UserEntity extends BaseEntity<UserEntity> {
   @Field({ nullable: true })
   hash?: string
 
+  @Field({ nullable: true })
   password?: string
 
   @BeforeInsert()

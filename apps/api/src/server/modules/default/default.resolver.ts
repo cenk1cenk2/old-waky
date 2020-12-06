@@ -1,18 +1,9 @@
-import { Args, Query, Resolver } from '@nestjs/graphql'
+import { Query, Resolver } from '@nestjs/graphql'
 
-import { DefaultSchema } from './default.schema'
-
-@Resolver('Default')
+@Resolver()
 export class DefaultResolver {
-  @Query(() => DefaultSchema)
-  public hello (
-    @Args({
-      name: 'name',
-      nullable: true,
-      defaultValue: 'world'
-    })
-      name: string
-  ): DefaultSchema {
-    return { response: `Hello ${name}.` }
+  @Query(() => String)
+  public hello (): string {
+    return `Waky API v${process.env.PACKAGE_VERSION}. Please check documentation under https://srcs.kilic.dev/waky`
   }
 }

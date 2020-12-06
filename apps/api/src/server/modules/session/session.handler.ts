@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import geo from 'geoip-lite'
 import { Repository } from 'typeorm'
-import { UAParser } from 'ua-parser-js'
+import UAParser from 'ua-parser-js'
 
 import { SessionEntity } from '@waky/api/entities/session.entity'
 import { DecodedToken } from '@waky/api/interfaces/decoded-token.interface'

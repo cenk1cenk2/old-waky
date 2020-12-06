@@ -1,2 +1,2 @@
-export * from './default/default.module'
 export * from './login/login.module'
+export * from './default/default.module'

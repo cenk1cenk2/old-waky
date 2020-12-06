@@ -11,32 +11,23 @@ export type Scalars = {
   Float: number
 }
 
-export type DefaultSchema = {
-  __typename?: 'DefaultSchema'
-  response?: Maybe<Scalars['String']>
-}
-
-export type UserWithTokenDto = {
-  __typename?: 'UserWithTokenDto'
+export type LoginOutput = {
+  __typename?: 'LoginOutput'
   username: Scalars['String']
   token: Scalars['String']
 }
 
 export type Query = {
   __typename?: 'Query'
-  hello: DefaultSchema
-}
-
-export type QueryHelloArgs = {
-  name?: Maybe<Scalars['String']>
+  hello: Scalars['String']
 }
 
 export type Mutation = {
   __typename?: 'Mutation'
-  login: UserWithTokenDto
+  login: LoginOutput
 }
 
 export type MutationLoginArgs = {
-  password: Scalars['String']
   username: Scalars['String']
+  password?: Maybe<Scalars['String']>
 }

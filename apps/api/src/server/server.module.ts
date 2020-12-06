@@ -39,7 +39,7 @@ export function createServerModule (mock = false): new (mock: boolean) => NestMo
       },
       {
         provide: APP_PIPE,
-        useClass: ExtendedValidationPipe
+        useFactory: () => new ExtendedValidationPipe({ whitelist: false })
       },
       {
         provide: APP_GUARD,
