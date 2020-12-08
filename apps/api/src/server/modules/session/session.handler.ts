@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common'
 import { OnEvent } from '@nestjs/event-emitter'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -31,16 +31,16 @@ export class SessionHandler {
     const ip = e.req.headers['x-forwarded-for'] ?? e.req.ip
 
     const ua = new UAParser(e.req.headers['user-agent'])
-    const uaBrowser = ua.getBrowser()
-    const uaOs = ua.getOS()
+    const browser = ua.getBrowser()
+    const os = ua.getOS()
     const location = geo.lookup(ip)
 
     // generate user session details
     const sessionDetails: Partial<SessionEntity> = {
       ip,
       geo: location?.city && location?.country ? `${location.city}/${location.country}` : 'unknown',
-      browser: `${uaBrowser.name} ${uaBrowser.version}`,
-      os: `${uaOs.name}/${uaOs.version}`
+      browser: `${browser.name} ${browser.version}`,
+      os: `${os.name}/${os.version}`
     }
 
     const session = new SessionEntity({
@@ -49,8 +49,14 @@ export class SessionHandler {
       ...sessionDetails
     })
 
-    await this.sessionRepository.save(session)
+    try {
+      await this.sessionRepository.save(session)
 
-    this.logger.verbose(`New session registered for user id "${id}" from "${ip}".`)
+      this.logger.verbose(`New session registered for user id "${id}" from "${ip}".`)
+    } catch (e) {
+      throw new InternalServerErrorException(
+        `There was an error while creating a session for user. Please try again later. ${e}`
+      )
+    }
   }
 }

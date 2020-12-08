@@ -1,7 +1,5 @@
-import { ObjectID } from 'typeorm'
-
 export class DecodedToken {
-  id?: ObjectID
+  id?: string
   exp: string
   iat: string
   key: string

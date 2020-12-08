@@ -5,7 +5,7 @@ import { plainToClass } from 'class-transformer'
 import { NestSchedule, Timeout, UseLocker } from 'nest-schedule'
 import { Repository } from 'typeorm'
 
-import { UserEntity, UserWithPasswordDto } from '@waky/api/entities/user.entity'
+import { UserEntity } from '@waky/api/entities/user.entity'
 import { TimeoutTaskDefaults } from '@waky/api/task/defaults/task.constants'
 
 @Injectable()
@@ -27,8 +27,8 @@ export class DefaultUserTask extends NestSchedule {
       const users = await this.repository.findAndCount()
 
       const user = plainToClass(
-        UserWithPasswordDto,
-        new UserWithPasswordDto({
+        UserEntity,
+        new UserEntity({
           username,
           password
         })

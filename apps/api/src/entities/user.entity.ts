@@ -1,10 +1,12 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import * as bcrypt from 'bcryptjs'
 import { Exclude } from 'class-transformer'
-import { IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
-import { BeforeInsert, BeforeUpdate, Column, Entity, Unique } from 'typeorm'
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator'
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, Unique } from 'typeorm'
 
 import { BaseEntity } from './util'
+import { SessionEntity } from '@waky/api/entities/session.entity'
+import { Events } from '@waky/api/interfaces/emitter.interface'
 
 @ObjectType()
 @Entity('Users')
@@ -18,7 +20,6 @@ export class UserEntity extends BaseEntity<UserEntity> {
   @IsString({ always: true })
   @MaxLength(32)
   @IsNotEmpty()
-  @IsOptional({ groups: [ 'update' ] })
   @Field({ nullable: false })
   username?: string
 
@@ -30,7 +31,15 @@ export class UserEntity extends BaseEntity<UserEntity> {
   hash?: string
 
   @Field({ nullable: true })
+  @IsString({ always: true })
+  @MaxLength(32)
+  @IsNotEmpty({ groups: [ Events.USER_LOGIN ] })
   password?: string
+
+  // relations-outgoing
+  @Field(() => [ SessionEntity ], { nullable: true })
+  @ManyToOne(() => SessionEntity, (session) => session.user, { nullable: true })
+  sessions?: SessionEntity[]
 
   @BeforeInsert()
   @BeforeUpdate()
@@ -40,15 +49,4 @@ export class UserEntity extends BaseEntity<UserEntity> {
       delete this.password
     }
   }
-}
-
-@ObjectType()
-export class UserWithPasswordDto extends UserEntity {
-  @IsString({ always: true })
-  @MaxLength(32)
-  @MinLength(6)
-  @IsNotEmpty()
-  @IsOptional({ groups: [ 'update' ] })
-  @Field({ nullable: true })
-  password?: string
 }

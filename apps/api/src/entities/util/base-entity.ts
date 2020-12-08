@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { CreateDateColumn, ObjectID, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm'
+import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm'
 
 export abstract class BaseEntity<T> {
   @ApiProperty({
@@ -8,7 +8,7 @@ export abstract class BaseEntity<T> {
     readOnly: true
   })
   @PrimaryGeneratedColumn()
-  id?: ObjectID
+  id?: string
 
   @ApiProperty({
     type: 'string',

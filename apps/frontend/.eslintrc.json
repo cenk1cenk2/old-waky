@@ -1,6 +1,15 @@
 {
   "extends": ["../../.eslintrc.json", "@cenk1cenk2/eslint-config/react-typescript"],
   "rules": {
-    "no-undef": "off"
-  }
+    "no-undef": "off",
+    "no-console": "off"
+  },
+  "overrides": [
+    {
+      "files": "*.tsx",
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }
