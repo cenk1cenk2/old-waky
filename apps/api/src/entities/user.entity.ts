@@ -6,7 +6,7 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, Unique } from 't
 
 import { BaseEntity } from './util'
 import { SessionEntity } from '@waky/api/entities/session.entity'
-import { Events } from '@waky/api/interfaces/emitter.interface'
+import { Events } from '@waky/api/interfaces'
 
 @ObjectType()
 @Entity('Users')

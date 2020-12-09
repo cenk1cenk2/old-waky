@@ -21,7 +21,7 @@
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
     "affected:test": "nx affected:test",
-    "affected:lint": "nx format:write && nx affected:lint --all --fix",
+    "affected:lint": "nx format:write --base=$(git branch --show-current) && nx affected:lint --parallel --maxParallel=5 --fix --base=$(git branch --show-current) --skip-nx-cache --",
     "affected:dep-graph": "nx affected:dep-graph",
     "update": "nx migrate latest",
     "workspace-schematic": "nx workspace-schematic",

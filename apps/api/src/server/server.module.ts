@@ -24,6 +24,7 @@ import { SessionModule } from './modules/session/session.module'
 import { ApplicationAuthGuard } from '@waky/api/guards/auth.guard'
 import { AuthGuardModule } from '@waky/api/guards/auth.guard.module'
 import { createTaskModule } from '@waky/api/task/task.module'
+import { EmitterModule } from '@waky/nestjs-common'
 
 export function createServerModule (mock = false): new (mock: boolean) => NestModule {
   @Module({
@@ -61,6 +62,7 @@ export function createServerModule (mock = false): new (mock: boolean) => NestMo
       InternalModule,
       MaintenanceModule,
       EventEmitterModule.forRoot(),
+      EmitterModule,
       createTaskModule(),
       AuthGuardModule,
       SessionModule,

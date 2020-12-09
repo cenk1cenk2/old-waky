@@ -1,4 +1,4 @@
-import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common'
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common'
 import { OnEvent } from '@nestjs/event-emitter'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -7,8 +7,8 @@ import { Repository } from 'typeorm'
 import UAParser from 'ua-parser-js'
 
 import { SessionEntity } from '@waky/api/entities/session.entity'
+import { WakyEventRequest, WakyEventResponse, Events } from '@waky/api/interfaces'
 import { DecodedToken } from '@waky/api/interfaces/decoded-token.interface'
-import { Events, EventTypes } from '@waky/api/interfaces/emitter.interface'
 
 @Injectable()
 export class SessionHandler {
@@ -20,9 +20,7 @@ export class SessionHandler {
   ) {}
 
   @OnEvent(Events.USER_LOGIN, { promisify: true })
-  public async sessionRegister (
-    e: EventTypes[Events.USER_LOGIN]['request']
-  ): Promise<EventTypes[Events.USER_LOGIN]['response']> {
+  public async sessionRegister (e: WakyEventRequest<Events.USER_LOGIN>): Promise<WakyEventResponse<Events.USER_LOGIN>> {
     // decode token
     const decodedToken = this.jwtService.decode(e.token) as DecodedToken
     const { id, ...rest } = decodedToken

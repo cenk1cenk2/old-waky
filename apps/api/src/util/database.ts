@@ -1,5 +1,6 @@
 import { ConfigService } from '@webundsoehne/nestjs-util'
 import { join } from 'path'
+import { ConnectionOptions } from 'typeorm'
 
 const { mock: mockOptions = {}, directories, ...options } = ConfigService.get('database')
 
@@ -15,6 +16,6 @@ const databaseOptions = {
   factories: [ join(process.cwd(), `./${directories.seed}/**/*.factory{.ts,.js}`) ]
 }
 
-export function getDatabaseOptions (mock = false) {
+export function getDatabaseOptions (mock = false): ConnectionOptions {
   return mock ? { ...databaseOptions, ...mockOptions } : databaseOptions
 }

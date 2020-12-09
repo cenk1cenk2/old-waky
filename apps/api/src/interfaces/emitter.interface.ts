@@ -1,9 +1,18 @@
-import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
+import { Events } from './events.interface'
+import { GraphQLContext } from './graphql-context.interface'
+import { EventMap, EventRequest, EventResponse, EventManager } from '@waky/nestjs-common'
 
-export enum Events {
-  USER_LOGIN = 'user_login'
+/**
+ * Request-response maps of events.
+ */
+export declare class WakyEventMap implements EventMap<Events> {
+  [Events.USER_LOGIN]: {
+    request: { req: GraphQLContext['req'], token: string }
+  }
 }
 
-export declare class EventTypes implements Record<Events, { response: any, request: any }> {
-  [Events.USER_LOGIN]: { request: { req: GraphQLContext['req'], token: string }, response: void }
-}
+export type WakyEventRequest<E extends Events> = EventRequest<E, WakyEventMap>
+
+export type WakyEventResponse<E extends Events> = EventResponse<E, WakyEventMap>
+
+export type WakyEventManager = EventManager<Events, WakyEventMap>

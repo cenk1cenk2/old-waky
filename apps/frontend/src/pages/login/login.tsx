@@ -9,7 +9,7 @@ import { TextField } from '@waky/frontend/components/input/text-field.component'
 import { ClientQuery, ClientQueryMap } from '@waky/frontend/utils'
 import delay from 'delay'
 import { Form, Formik } from 'formik'
-import React, { Fragment, ReactElement, useState } from 'react'
+import React, { Fragment, ReactElement, useState, useCallback } from 'react'
 import { useTheme } from 'styled-components'
 
 import { loginValidationSchema } from './login.util'
@@ -17,21 +17,24 @@ import { loginValidationSchema } from './login.util'
 export const LoginPage: React.FC = () => {
   const [ credentials ] = useState<MutationLoginArgs>({ username: '', password: '' })
   const defaultMessage = 'Please provide your credentials.'
-  const [ message, setMessage ] = useState<ReactElement>(ShowMessage({ message: defaultMessage }))
+  const [ message, setMessage ] = useState<React.FC>(ShowMessage({ message: defaultMessage }))
   const [ submitted, setSubmitted ] = useState<boolean>(false)
   const [ login ] = useMutation<Mutation['login'], MutationLoginArgs>(ClientQueryMap[ClientQuery.USER_LOGIN])
 
-  const handleSubmit = async ({ username, password }: MutationLoginArgs) => {
-    setSubmitted(true)
-    try {
-      const { data, errors, context, extensions } = await login({ variables: { username, password } })
-      console.log(data, errors, context, extensions)
-    } catch (e) {
-      setMessage(ShowMessage({ message: e.message, color: 'error' }))
-      setSubmitted(false)
-      delay(3000).then(() => setMessage(ShowMessage({ message: defaultMessage })))
-    }
-  }
+  const handleSubmit = useCallback(
+    async ({ username, password }: MutationLoginArgs) => {
+      setSubmitted(true)
+      try {
+        const { data, errors, context, extensions } = await login({ variables: { username, password } })
+        console.log(data, errors, context, extensions)
+      } catch (e) {
+        setMessage(ShowMessage({ message: e.message, color: 'error' }))
+        setSubmitted(false)
+        delay(3000).then(() => setMessage(ShowMessage({ message: defaultMessage })))
+      }
+    },
+    [ ShowMessage ]
+  )
 
   return (
     <Fragment>
@@ -102,6 +105,7 @@ export const LoginPage: React.FC = () => {
 
 const ShowMessage: React.FC<{ color?: 'error', message: string }> = (props) => {
   const theme = useTheme()
+
   return (
     <Fragment>
       <Typography variant="body2" color={props.color ?? 'textSecondary'}>

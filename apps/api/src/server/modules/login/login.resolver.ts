@@ -1,5 +1,4 @@
 import { ForbiddenException, Inject, Logger } from '@nestjs/common'
-import { EventEmitter2 } from '@nestjs/event-emitter'
 import { Args, CONTEXT, Mutation, Resolver } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -11,10 +10,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { LoginInput } from './login.input'
 import { LoginOutput } from './login.output'
 import { UserEntity } from '@waky/api/entities/user.entity'
-import { Events } from '@waky/api/interfaces/emitter.interface'
+import { Events, WakyEventManager } from '@waky/api/interfaces'
 import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
-import { emitter } from '@waky/api/util/emitter'
-import { Public } from '@waky/nestjs-common'
+import { EventManager, Public } from '@waky/nestjs-common'
 
 @Public()
 @Resolver(LoginOutput)
@@ -24,8 +22,8 @@ export class LoginResolver {
   constructor (
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
     @Inject(CONTEXT) private readonly context: GraphQLContext,
-    private jwtService: JwtService,
-    private readonly emitter: EventEmitter2
+    @Inject(EventManager) private readonly emitter: WakyEventManager,
+    private jwtService: JwtService
   ) {}
 
   @OverrideValidationOptions({ groups: [ Events.USER_LOGIN ], validateCustomDecorators: false })
@@ -42,7 +40,7 @@ export class LoginResolver {
     // create token
     const token = this.jwtService.sign({ id: user.id, key: uuidv4() })
 
-    await emitter(this.emitter, Events.USER_LOGIN, { req: this.context.req, token })
+    await this.emitter.emit(Events.USER_LOGIN, { req: this.context.req, token })
 
     // send user without has and the token back to the user
     return {
