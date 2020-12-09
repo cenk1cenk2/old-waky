@@ -13,7 +13,6 @@ import { UserEntity } from '@waky/api/entities/user.entity'
 import { Events, WakyEventManager } from '@waky/api/interfaces'
 import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
 import { EventManager, Public } from '@waky/nestjs-common'
-
 @Public()
 @Resolver(LoginOutput)
 export class LoginResolver {
