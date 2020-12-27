@@ -3,8 +3,8 @@ import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { ConfigService } from '@webundsoehne/nestjs-util'
 
+import { ApplicationKey } from '@cenk1cenk2/nestjs-auth-key-generator'
 import { JwtStrategy } from '@waky/api/guards/jwt.strategy'
-import { ApplicationKey } from '@waky/api/util/key'
 
 @Global()
 @Module({

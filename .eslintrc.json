@@ -10,6 +10,10 @@
           {
             "pattern": "@waky/**",
             "group": "index"
+          },
+          {
+            "pattern": "@cenk1cenk2/**",
+            "group": "index"
           }
         ],
         "pathGroupsExcludedImportTypes": ["builtin"],

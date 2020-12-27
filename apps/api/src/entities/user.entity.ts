@@ -2,11 +2,11 @@ import { Field, ObjectType } from '@nestjs/graphql'
 import * as bcrypt from 'bcryptjs'
 import { Exclude } from 'class-transformer'
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator'
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, Unique } from 'typeorm'
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, Unique } from 'typeorm'
 
+import { MachineSessionEntity } from './machine-session.entity'
 import { BaseEntity } from './util'
-import { SessionEntity } from '@waky/api/entities/session.entity'
-import { Events } from '@waky/api/interfaces'
+import { UserSessionEntity } from '@waky/api/entities/user-session.entity'
 
 @ObjectType()
 @Entity('Users')
@@ -33,13 +33,17 @@ export class UserEntity extends BaseEntity<UserEntity> {
   @Field({ nullable: true })
   @IsString({ always: true })
   @MaxLength(32)
-  @IsNotEmpty({ groups: [ Events.USER_LOGIN ] })
+  @IsNotEmpty()
   password?: string
 
   // relations-outgoing
-  @Field(() => [ SessionEntity ], { nullable: true })
-  @ManyToOne(() => SessionEntity, (session) => session.user, { nullable: true })
-  sessions?: SessionEntity[]
+  @Field(() => [ UserSessionEntity ], { nullable: true })
+  @OneToMany(() => UserSessionEntity, (session) => session.user, { nullable: true })
+  userSessions?: UserSessionEntity[]
+
+  @Field(() => [ MachineSessionEntity ], { nullable: true })
+  @OneToMany(() => MachineSessionEntity, (session) => session.user, { nullable: true })
+  machineSessions?: MachineSessionEntity[]
 
   @BeforeInsert()
   @BeforeUpdate()

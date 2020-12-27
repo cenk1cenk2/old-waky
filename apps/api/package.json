@@ -15,8 +15,5 @@
   "engines": {
     "node": ">=12"
   },
-  "implicitDependencies": {},
-  "devDependencies": {
-    "@types/uuid": "^8.3.0"
-  }
+  "implicitDependencies": {}
 }

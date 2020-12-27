@@ -3,8 +3,8 @@ import { PassportStrategy } from '@nestjs/passport'
 import { FastifyRequest } from 'fastify'
 import { ExtractJwt, Strategy, VerifiedCallback } from 'passport-jwt'
 
+import { ApplicationKey } from '@cenk1cenk2/nestjs-auth-key-generator'
 import { DecodedToken } from '@waky/api/interfaces/decoded-token.interface'
-import { ApplicationKey } from '@waky/api/util/key'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -19,8 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   public async validate (req: FastifyRequest, payload: DecodedToken, done: VerifiedCallback): Promise<void> {
     // await this.sessionsService.verifyUserSession(payload)
-    console.log('test')
-    throw new Error('anan')
 
     return done(null, payload)
   }

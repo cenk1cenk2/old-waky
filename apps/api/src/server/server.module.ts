@@ -21,10 +21,10 @@ import { getDatabaseOptions } from '../util/database'
 import { graphQLContextParser, graphQLErrorParser } from './graphql-setup'
 import * as modules from './modules'
 import { SessionModule } from './modules/session/session.module'
+import { EventManagerModule } from '@cenk1cenk2/nestjs-emitter'
 import { ApplicationAuthGuard } from '@waky/api/guards/auth.guard'
 import { AuthGuardModule } from '@waky/api/guards/auth.guard.module'
 import { createTaskModule } from '@waky/api/task/task.module'
-import { EmitterModule } from '@waky/nestjs-common'
 
 export function createServerModule (mock = false): new (mock: boolean) => NestModule {
   @Module({
@@ -62,7 +62,7 @@ export function createServerModule (mock = false): new (mock: boolean) => NestMo
       InternalModule,
       MaintenanceModule,
       EventEmitterModule.forRoot(),
-      EmitterModule,
+      EventManagerModule,
       createTaskModule(),
       AuthGuardModule,
       SessionModule,

@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { SessionHandler } from './session.handler'
-import { SessionEntity } from '@waky/api/entities/session.entity'
+import { MachineSessionEntity } from '@waky/api/entities/machine-session.entity'
+import { UserSessionEntity } from '@waky/api/entities/user-session.entity'
 
 @Module({
-  imports: [ TypeOrmModule.forFeature([ SessionEntity ]) ],
+  imports: [ TypeOrmModule.forFeature([ UserSessionEntity, MachineSessionEntity ]) ],
   providers: [ SessionHandler ]
 })
 export class SessionModule {}

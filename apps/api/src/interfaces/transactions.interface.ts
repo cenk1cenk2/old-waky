@@ -1,5 +1,5 @@
 import { Events } from './events.interface'
-import { TransactionMap, WithTransactionManager, GetTransactionType } from '@waky/nestjs-common'
+import { TransactionMap, WithTransactionManager, GetTransactionType } from '@cenk1cenk2/nestjs-transactions'
 
 /**
  * Internal transaction managers that are shared through out certain events

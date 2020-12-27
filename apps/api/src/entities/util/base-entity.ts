@@ -1,34 +1,23 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { Field, ObjectType } from '@nestjs/graphql'
 import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm'
 
+@ObjectType({ isAbstract: true })
 export abstract class BaseEntity<T> {
-  @ApiProperty({
-    type: 'string',
-    format: 'uuid',
-    readOnly: true
-  })
   @PrimaryGeneratedColumn()
-  id?: string
+  @Field(() => String)
+  id: string
 
-  @ApiProperty({
-    type: 'string',
-    format: 'date-time',
-    readOnly: true
-  })
+  @Field(() => Date)
   @CreateDateColumn({ type: 'datetime', name: 'createdAt' })
-  createdAt?: Date
+  createdAt: Date
 
-  @ApiProperty({
-    type: 'string',
-    format: 'date-time',
-    readOnly: true
-  })
+  @Field(() => Date)
   @UpdateDateColumn({ type: 'datetime', name: 'updatedAt' })
-  updatedAt?: Date
+  updatedAt: Date
 
-  @ApiProperty({ type: 'number', readOnly: true })
+  @Field(() => Number)
   @VersionColumn()
-  version?: number
+  version: number
 
   constructor (object: Partial<T & BaseEntity<T>>) {
     Object.assign(this, object)

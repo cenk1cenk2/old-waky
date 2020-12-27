@@ -12,12 +12,12 @@ import { Form, Formik } from 'formik'
 import React, { Fragment, ReactElement, useState, useCallback } from 'react'
 import { useTheme } from 'styled-components'
 
+import { ShowMessageProps } from './login.interface'
 import { loginValidationSchema } from './login.util'
 
 export const LoginPage: React.FC = () => {
   const [ credentials ] = useState<MutationLoginArgs>({ username: '', password: '' })
-  const defaultMessage = 'Please provide your credentials.'
-  const [ message, setMessage ] = useState<React.FC>(ShowMessage({ message: defaultMessage }))
+  const [ message, setMessage ] = useState<ShowMessageProps>()
   const [ submitted, setSubmitted ] = useState<boolean>(false)
   const [ login ] = useMutation<Mutation['login'], MutationLoginArgs>(ClientQueryMap[ClientQuery.USER_LOGIN])
 
@@ -28,9 +28,9 @@ export const LoginPage: React.FC = () => {
         const { data, errors, context, extensions } = await login({ variables: { username, password } })
         console.log(data, errors, context, extensions)
       } catch (e) {
-        setMessage(ShowMessage({ message: e.message, color: 'error' }))
+        setMessage({ type: 'error', message: e.message })
         setSubmitted(false)
-        delay(3000).then(() => setMessage(ShowMessage({ message: defaultMessage })))
+        delay(3000).then(() => setMessage({}))
       }
     },
     [ ShowMessage ]
@@ -53,7 +53,9 @@ export const LoginPage: React.FC = () => {
               <Grid item>
                 <Typography variant="h3">waky</Typography>
               </Grid>
-              <Grid item>{message}</Grid>
+              <Grid item>
+                {!message?.message ? <DefaultMessage /> : <ShowMessage message={message.message} type={message.type} />}
+              </Grid>
             </Grid>
             <Grid item>
               <Formik
@@ -103,13 +105,17 @@ export const LoginPage: React.FC = () => {
   )
 }
 
-const ShowMessage: React.FC<{ color?: 'error', message: string }> = (props) => {
+const DefaultMessage: React.FC = () => {
+  return <ShowMessage message="Please provide your credentials." />
+}
+
+const ShowMessage: React.FC<ShowMessageProps> = (props) => {
   const theme = useTheme()
 
   return (
     <Fragment>
-      <Typography variant="body2" color={props.color ?? 'textSecondary'}>
-        {props.color === 'error' && (
+      <Typography variant="body2" color={props.type ?? 'textSecondary'}>
+        {props.type === 'error' && (
           <FontAwesomeIcon icon={faExclamationCircle} style={{ paddingRight: theme.spacing(1) }} />
         )}
         {props.message}
