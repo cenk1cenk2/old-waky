@@ -1664,22 +1664,22 @@
     eslint-plugin-import "^2.22.1"
     eslint-plugin-react-hooks "^4.2.0"
 
-"@cenk1cenk2/nestjs-auth-key-generator@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-auth-key-generator/-/nestjs-auth-key-generator-1.0.2.tgz#b9c7a9ecea98f5ca738f496be579d88489241c36"
-  integrity sha512-bpIdk3yLI/v59jXPp5F4e4fmW6b8qLSbYqdAk687eWEkG2hYsu9B9K7PuLHDJoBqk4qdGv1CIIQvt5zT7ylBgA==
+"@cenk1cenk2/nestjs-auth-key-generator@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-auth-key-generator/-/nestjs-auth-key-generator-1.1.0.tgz#da955bd3210974c0d12c74e66bf2023ad04db8d4"
+  integrity sha512-Ej9CJcFH3Qt5gaTCm3dDCDRS6ZRuibWfGtwA7+pkvlv6pfZW+BbQ325+1ezzDxc6d2Tfz4Zc10+NNU/5K5Appw==
   dependencies:
     keypair "^1.0.1"
 
-"@cenk1cenk2/nestjs-emitter@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-emitter/-/nestjs-emitter-1.0.3.tgz#c36f9247d859024e0848794e0fc7bdc6988100cc"
-  integrity sha512-14JErVscrvB4wNq3nCOGiF64ecthMTJskEkI+Kfjpp+j0ZtFZv1s914qJV4/FOdgJ99BPT7QampoIOK4m3ef4w==
+"@cenk1cenk2/nestjs-emitter@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-emitter/-/nestjs-emitter-1.1.0.tgz#c7972c432e898e70a8e1a7933c38def11876740f"
+  integrity sha512-pZu/+W1hGV/pzrJJ8lWIiUUH9ICtJtLWCVmXQd/JnDsKUVE3Q97JqTS160kz0olU/orj704tawCNybe+8zQ+Gg==
 
-"@cenk1cenk2/nestjs-graphql-generator@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-graphql-generator/-/nestjs-graphql-generator-1.0.2.tgz#0ba877e0a3353757dda8c491d782a0a672297529"
-  integrity sha512-HiOir6PKV+pcQnMMIA9du6265IIELXkBOVt4EE3TTHogYqYrP8cNIDjnNjmXH8D3XjMsuKLiXIiYzeXVCYsg4Q==
+"@cenk1cenk2/nestjs-graphql-generator@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-graphql-generator/-/nestjs-graphql-generator-1.1.0.tgz#07728d706bcc1ff0c3db8207abfff9fa41336ea7"
+  integrity sha512-t2IMBmI8idodRbmHY9EnqIWn1ozS0X9CA6L12e1pA3NSXwxhStVDZdb6rx9XUdJoE6yBQ8VMPAfw7L5h5P9MZQ==
   dependencies:
     "@graphql-codegen/cli" "^1.20.0"
     "@graphql-codegen/typescript" "^1.19.0"
@@ -1690,20 +1690,20 @@
   resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-graphql/-/nestjs-graphql-1.0.0.tgz#ddaba3811268dde26f79a951876ba76a88ce29c1"
   integrity sha512-u5F0jzXCB9uXZj2p+6yZwPNoKlystm1glywZYw7kXWuhCqNq/sapNHghXvj1RHcKo4bI3dVUWZu3gGvIrHivaA==
 
-"@cenk1cenk2/nestjs-transactions@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-transactions/-/nestjs-transactions-1.0.4.tgz#646c9904709c7fcfd8a46f79ad121e5e3187c360"
-  integrity sha512-DqoUeeNdhHK77MUum3lfeKYK4sl6nJ4negahNU1pPopOvr+z4uh7647u3e7En5jj0hn/KXxGscS1H7X/ZLJIfw==
+"@cenk1cenk2/nestjs-transactions@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-transactions/-/nestjs-transactions-1.1.0.tgz#615bc52203e8d2dfb2c14334fb7f192c5d1a0201"
+  integrity sha512-JEWg6qCNvGeDsGfjc8Pfyc34+eRmt+1RRmxVh/kCqwb8qEbJedQgLpgsRwM/hUxlBoFOmf709IqRhwKqK37OxA==
 
 "@cenk1cenk2/nestjs-typeorm@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-typeorm/-/nestjs-typeorm-1.0.0.tgz#f80d48a8df17c599bf85d96c7aab950806e5ec25"
   integrity sha512-KrOsAOoOHxUIW++o8EgPopKBwE6vx2C/DRI+8TcgF+mueR5CA0PvcNkqylqjqNQ00VZvQUJw69uU8mCOSVwp4w==
 
-"@cenk1cenk2/nestjs-utils@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-utils/-/nestjs-utils-1.0.3.tgz#aabf215fe831c3fd9a1c5593fa0a8ee14d7ff0e1"
-  integrity sha512-/p6MNzmYaOYKNCinIcuCWGK1VoZWLEjdukifyg6gUUbd9KrytfUjmjt/ta9TiT8NqGA7iB64l3XzWcRelJh3AQ==
+"@cenk1cenk2/nestjs-utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/nestjs-utils/-/nestjs-utils-1.1.0.tgz#29c0760045b6dc676565b1c9fcdfcc22beac9262"
+  integrity sha512-yeh8IW6MGL258Y5pvlcjWpTfXsGBteR1Mq3R7ivkj/OWPVXsK09weGmfRU/c9HwDI/300mv53tblg1LBr+/odg==
 
 "@cenk1cenk2/react-template-base@^2.0.1":
   version "2.0.1"
