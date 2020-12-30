@@ -6,7 +6,7 @@ const { mock: mockOptions = {}, directories, ...options } = ConfigService.get('d
 
 const databaseOptions = {
   ...options,
-  entities: [ join(process.cwd(), directories.entity) ],
+  entities: [ join(process.cwd(), `${directories.entity}/*.entity{.ts,.js}`) ],
   migrations: [ join(process.cwd(), `./${directories.migration}/*{.ts,.js}`) ],
   cli: {
     entitiesDir: directories.entity,

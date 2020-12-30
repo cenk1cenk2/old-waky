@@ -1,6 +1,7 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { AuthGuard } from '@nestjs/passport'
+import { Observable } from 'rxjs'
 
 import { PublicDecorator } from '@cenk1cenk2/nestjs-utils'
 
@@ -10,16 +11,21 @@ export class ApplicationAuthGuard extends AuthGuard('jwt') implements CanActivat
     super()
   }
 
-  async canActivate (context: ExecutionContext): Promise<boolean> {
+  public async canActivate (context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.get<boolean>(PublicDecorator, context.getHandler())
+
     if (isPublic) {
       return true
     } else {
-      // const ctx = GqlExecutionContext.create(context)
-      try {
-        return true
-      } catch (e) {
-        throw new UnauthorizedException(e)
+      const guard = super.canActivate(context)
+
+      // because of the types of this stuff
+      if (typeof guard === 'boolean') {
+        return guard
+      } else if (guard instanceof Observable) {
+        return guard.toPromise()
+      } else {
+        return guard
       }
     }
   }

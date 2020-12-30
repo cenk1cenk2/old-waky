@@ -9,7 +9,7 @@ import { UserSessionEntity } from '@waky/api/entities/user-session.entity'
 export class UserSessionResolver {
   constructor (private userSessionService: UserSessionService) {}
 
-  @Query(() => [ GetUserSessionsOutput ])
+  @Query(() => GetUserSessionsOutput)
   public getUserSessions (@Args() args: GetUserSessionsInput): Promise<GetUserSessionsOutput> {
     return this.userSessionService.getUserSessions(args)
   }

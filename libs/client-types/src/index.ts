@@ -13,17 +13,6 @@ export type Scalars = {
   DateTime: any
 }
 
-export type MachineSessionEntity = {
-  __typename?: 'MachineSessionEntity'
-  id: Scalars['String']
-  createdAt: Scalars['DateTime']
-  updatedAt: Scalars['DateTime']
-  version: Scalars['Float']
-  userId: Scalars['String']
-  token: Scalars['String']
-  user: UserEntity
-}
-
 export type UserSessionEntity = {
   __typename?: 'UserSessionEntity'
   id: Scalars['String']
@@ -53,6 +42,17 @@ export type UserEntity = {
   machineSessions?: Maybe<MachineSessionEntity[]>
 }
 
+export type MachineSessionEntity = {
+  __typename?: 'MachineSessionEntity'
+  id: Scalars['String']
+  createdAt: Scalars['DateTime']
+  updatedAt: Scalars['DateTime']
+  version: Scalars['Float']
+  userId: Scalars['String']
+  token: Scalars['String']
+  user: UserEntity
+}
+
 export type LoginOutput = {
   __typename?: 'LoginOutput'
   token: Scalars['String']
@@ -80,7 +80,7 @@ export type PaginationArgsInput = {
 export type Query = {
   __typename?: 'Query'
   hello: Scalars['String']
-  getUserSessions: GetUserSessionsOutput[]
+  getUserSessions: GetUserSessionsOutput
 }
 
 export type QueryGetUserSessionsArgs = {

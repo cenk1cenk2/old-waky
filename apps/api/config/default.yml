@@ -7,7 +7,7 @@ url:
 
 misc:
   lockfile: maintenance.lock
-  maintenanceNotification: "API in maintenance mode."
+  maintenanceNotification: 'API is down currently for maintenance, will be up shortly.'
   lastUpdateFile: .last-update
   changelogFile: CHANGELOG.md
 
@@ -38,7 +38,7 @@ database:
   mock:
     database: volumes/mock.db
   directories:
-    entity: '**/*.entity{.ts,.js}'
+    entity: '**/*'
     migration: migrations
     seed: seeds
 
