@@ -50,12 +50,18 @@ export class MachineSessionService {
     return { result: `Deleted ${result.affected} API tokens.` }
   }
 
+  /**
+   * Update a session token with new data and such.
+   *
+   * @param {UserEntity} user
+   * @param {UpdateTokenInput} { id, ...args }
+   * @returns  {Promise<UpdateTokenOutput>}
+   * @memberof MachineSessionService
+   */
   public async updateToken (user: UserEntity, { id, ...args }: UpdateTokenInput): Promise<UpdateTokenOutput> {
-    const priorEntity = await this.machineSessionRepository.findOneOrFail({ where: { id, userId: user.id } })
+    const entity = await this.machineSessionRepository.findOneOrFail({ where: { id, userId: user.id } })
 
-    const entity = new MachineSessionEntity({ ...priorEntity, ...args })
-
-    await this.machineSessionRepository.save(entity)
+    await this.machineSessionRepository.update(entity, args)
 
     return { result: 'Updated session token data.' }
   }

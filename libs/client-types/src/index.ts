@@ -88,6 +88,11 @@ export type RevokeTokenOutput = {
   result: Scalars['String']
 }
 
+export type UpdateTokenOutput = {
+  __typename?: 'UpdateTokenOutput'
+  result: Scalars['String']
+}
+
 export type PaginationArgsInput = {
   limit?: Maybe<Scalars['Int']>
   page?: Maybe<Scalars['Int']>
@@ -102,6 +107,8 @@ export type Query = {
   getMachineSessions: GetMachineSessionsOutput
   /** Revoke a set of API tokens that belongs to the user. */
   revokeToken: RevokeTokenOutput
+  /** Update session token data that belongs to a user. */
+  updateToken: UpdateTokenOutput
 }
 
 export type QueryGetUserSessionsArgs = {

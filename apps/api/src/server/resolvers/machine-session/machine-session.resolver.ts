@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql'
 
-import { GetMachineSessionsInput, RevokeTokenInput } from './machine-session.input'
-import { GetMachineSessionsOutput, RevokeTokenOutput } from './machine-session.output'
+import { GetMachineSessionsInput, RevokeTokenInput, UpdateTokenInput } from './machine-session.input'
+import { GetMachineSessionsOutput, RevokeTokenOutput, UpdateTokenOutput } from './machine-session.output'
 import { MachineSessionService } from './machine-session.service'
 import { MachineSessionEntity } from '@waky/api/entities/machine-session.entity'
 import { UserEntity } from '@waky/api/entities/user.entity'
@@ -22,5 +22,10 @@ export class MachineSessionResolver {
   @Query(() => RevokeTokenOutput, { description: 'Revoke a set of API tokens that belongs to the user.' })
   public revokeToken (@CurrentUser() user: UserEntity, @Args() args: RevokeTokenInput): Promise<RevokeTokenOutput> {
     return this.userSessionService.revokeToken(user, args)
+  }
+
+  @Query(() => UpdateTokenOutput, { description: 'Update session token data that belongs to a user.' })
+  public updateToken (@CurrentUser() user: UserEntity, @Args() args: UpdateTokenInput): Promise<UpdateTokenOutput> {
+    return this.userSessionService.updateToken(user, args)
   }
 }
