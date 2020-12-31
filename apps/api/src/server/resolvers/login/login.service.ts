@@ -1,4 +1,4 @@
-import { ForbiddenException, Inject, Injectable, Logger } from '@nestjs/common'
+import { ForbiddenException, Inject, Injectable } from '@nestjs/common'
 import { CONTEXT } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -16,8 +16,6 @@ import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
 
 @Injectable()
 export class LoginService {
-  private readonly logger: Logger = new Logger(this.constructor.name)
-
   constructor (
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
     @Inject(CONTEXT) private readonly context: GraphQLContext,
