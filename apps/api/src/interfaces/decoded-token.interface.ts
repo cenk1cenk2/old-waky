@@ -1,7 +1,7 @@
 export class DecodedToken {
   id?: string
-  exp: Date
-  iat: Date
+  exp: number
+  iat: number
   key: string
   machine?: boolean
 }

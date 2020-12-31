@@ -3,10 +3,10 @@ import { PassportStrategy } from '@nestjs/passport'
 import { FastifyRequest } from 'fastify'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 
-import { UserEntity } from '../entities/user.entity'
-import { Events, WakyEventManager } from '../interfaces'
 import { ApplicationKey } from '@cenk1cenk2/nestjs-auth-key-generator'
 import { EventManager } from '@cenk1cenk2/nestjs-emitter'
+import { UserEntity } from '@waky/api/entities/user.entity'
+import { Events, WakyEventManager } from '@waky/api/interfaces'
 import { DecodedToken } from '@waky/api/interfaces/decoded-token.interface'
 
 @Injectable()

@@ -84,7 +84,6 @@ export type Query = {
 }
 
 export type QueryGetUserSessionsArgs = {
-  userId: Scalars['String']
   pagination?: Maybe<PaginationArgsInput>
 }
 

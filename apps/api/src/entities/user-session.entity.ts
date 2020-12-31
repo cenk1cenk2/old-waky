@@ -21,14 +21,14 @@ export class UserSessionEntity extends BaseEntity<UserSessionEntity> implements 
   key: string
 
   @IsNotEmpty()
-  @Column('time', { nullable: false })
+  @Column('int', { nullable: false })
   @Field(() => Date)
-  exp: Date
+  exp: number
 
   @IsNotEmpty()
-  @Column('time', { nullable: false })
+  @Column('int', { nullable: false })
   @Field(() => Date)
-  iat: Date
+  iat: number
 
   @Column('varchar', { nullable: false })
   @Field(() => String)

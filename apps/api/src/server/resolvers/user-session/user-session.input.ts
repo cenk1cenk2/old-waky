@@ -6,6 +6,6 @@ import { UserSessionEntity } from '@waky/api/entities/user-session.entity'
 @ArgsType()
 export class GetUserSessionsInput extends PickType(
   IntersectionType(UserSessionEntity, PaginationArgs),
-  [ 'pagination', 'userId' ],
+  [ 'pagination' ],
   ArgsType
 ) {}

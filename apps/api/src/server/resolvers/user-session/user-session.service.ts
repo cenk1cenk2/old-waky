@@ -5,6 +5,7 @@ import { Repository } from 'typeorm'
 import { GetUserSessionsInput } from './user-session.input'
 import { findPaginatedResult, PaginatedResult } from '@cenk1cenk2/nestjs-typeorm'
 import { UserSessionEntity } from '@waky/api/entities/user-session.entity'
+import { UserEntity } from '@waky/api/entities/user.entity'
 
 @Injectable()
 export class UserSessionService {
@@ -12,9 +13,12 @@ export class UserSessionService {
     @InjectRepository(UserSessionEntity) private readonly userSessionRepository: Repository<UserSessionEntity>
   ) {}
 
-  public getUserSessions ({ pagination, ...args }: GetUserSessionsInput): Promise<PaginatedResult<UserSessionEntity>> {
+  public getUserSessions (
+    user: UserEntity,
+    { pagination }: GetUserSessionsInput
+  ): Promise<PaginatedResult<UserSessionEntity>> {
     return findPaginatedResult(this.userSessionRepository, pagination, {
-      where: { userId: args.userId }
+      where: { userId: user.id }
     })
   }
 }

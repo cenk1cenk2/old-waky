@@ -110,7 +110,7 @@ export class SessionHandler {
   ): Promise<WakyEventResponse<Events.SESSION_VERIFY>> {
     if (!e.machine) {
       // check the expiry manually, because we dont want to check it for api tokens
-      if (new Date(Date.now()) > e.exp) {
+      if (new Date(Date.now()) > new Date(e.exp * 1000)) {
         throw new UnauthorizedException('Session has expired.')
       }
 
@@ -118,16 +118,10 @@ export class SessionHandler {
       const entity = await this.userRepository
         .createQueryBuilder('user')
         .where('user.id = :id', { id: e.id })
-        .innerJoin(
-          'user.userSessions',
-          'userSessions',
-          'userSessions.key = :key; userSessions.iat: :iat; userSessions.exp = :exp',
-          {
-            key: e.key,
-            iat: e.iat,
-            exp: e.exp
-          }
-        )
+        .innerJoin('user.userSessions', 'userSessions')
+        .andWhere('userSessions.key = :key', { key: e.key })
+        .andWhere('userSessions.iat = :iat', { iat: e.iat })
+        .andWhere('userSessions.exp = :exp', { exp: e.exp })
         .getOne()
 
       if (!entity) {
@@ -139,9 +133,8 @@ export class SessionHandler {
       const entity = await this.userRepository
         .createQueryBuilder('user')
         .where('user.id = :id', { id: e.id })
-        .innerJoin('user.machineSessions', 'machineSessions', 'machineSessions.key = :key', {
-          key: e.key
-        })
+        .innerJoin('user.machineSessions', 'machineSessions')
+        .andWhere('machineSessions.key =: key', { key: e.key })
         .getOne()
 
       if (!entity) {
