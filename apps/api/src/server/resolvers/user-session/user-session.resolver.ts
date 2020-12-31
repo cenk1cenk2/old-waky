@@ -11,7 +11,7 @@ import { CurrentUser } from '@waky/nestjs-common'
 export class UserSessionResolver {
   constructor (private userSessionService: UserSessionService) {}
 
-  @Query(() => GetUserSessionsOutput)
+  @Query(() => GetUserSessionsOutput, { description: 'Get all currently logged in users.' })
   public getUserSessions (
     @CurrentUser() user: UserEntity,
       @Args() args: GetUserSessionsInput

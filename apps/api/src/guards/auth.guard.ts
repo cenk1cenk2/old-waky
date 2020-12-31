@@ -1,8 +1,7 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { AuthGuard } from '@nestjs/passport'
-import { Observable } from 'rxjs'
 
 import { PublicDecorator } from '@cenk1cenk2/nestjs-utils'
 import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
@@ -24,13 +23,12 @@ export class ApplicationAuthGuard extends AuthGuard('jwt') implements CanActivat
     if (isPublic) {
       return true
     } else {
-      const guard = super.canActivate(context)
+      try {
+        await super.canActivate(context)
 
-      // because of the types of this stuff
-      if (guard instanceof Observable) {
-        return guard.toPromise()
-      } else {
-        return guard
+        return true
+      } catch {
+        throw new UnauthorizedException('Invalid authentication token.')
       }
     }
   }

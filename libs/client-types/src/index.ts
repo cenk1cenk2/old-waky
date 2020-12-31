@@ -83,6 +83,11 @@ export type GetMachineSessionsOutput = {
   pagination: PaginationOutput
 }
 
+export type RevokeTokenOutput = {
+  __typename?: 'RevokeTokenOutput'
+  result: Scalars['String']
+}
+
 export type PaginationArgsInput = {
   limit?: Maybe<Scalars['Int']>
   page?: Maybe<Scalars['Int']>
@@ -91,8 +96,12 @@ export type PaginationArgsInput = {
 export type Query = {
   __typename?: 'Query'
   hello: Scalars['String']
+  /** Get all currently logged in users. */
   getUserSessions: GetUserSessionsOutput
+  /** Get all API tokens defined. */
   getMachineSessions: GetMachineSessionsOutput
+  /** Revoke a set of API tokens that belongs to the user. */
+  revokeToken: RevokeTokenOutput
 }
 
 export type QueryGetUserSessionsArgs = {
@@ -103,9 +112,15 @@ export type QueryGetMachineSessionsArgs = {
   pagination?: Maybe<PaginationArgsInput>
 }
 
+export type QueryRevokeTokenArgs = {
+  id: Scalars['String'][]
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
+  /** Login with username and password to get the JWT token. */
   login: LoginOutput
+  /** Create an API token to use in automated requests. */
   createToken: CreateTokenOutput
 }
 

@@ -12,12 +12,12 @@ export class LoginResolver {
   constructor (private loginService: LoginService) {}
 
   @Public()
-  @Mutation(() => LoginOutput)
+  @Mutation(() => LoginOutput, { description: 'Login with username and password to get the JWT token.' })
   public async login (@Args() args: LoginInput): Promise<LoginOutput> {
     return this.loginService.login(args)
   }
 
-  @Mutation(() => CreateTokenOutput)
+  @Mutation(() => CreateTokenOutput, { description: 'Create an API token to use in automated requests.' })
   public async createToken (
     @CurrentUser() user: UserEntity,
       @Args() args: CreateTokenInput
