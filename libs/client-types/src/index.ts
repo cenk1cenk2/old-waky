@@ -105,10 +105,6 @@ export type Query = {
   getUserSessions: GetUserSessionsOutput
   /** Get all API tokens defined. */
   getMachineSessions: GetMachineSessionsOutput
-  /** Revoke a set of API tokens that belongs to the user. */
-  revokeToken: RevokeTokenOutput
-  /** Update session token data that belongs to a user. */
-  updateToken: UpdateTokenOutput
 }
 
 export type QueryGetUserSessionsArgs = {
@@ -119,16 +115,16 @@ export type QueryGetMachineSessionsArgs = {
   pagination?: Maybe<PaginationArgsInput>
 }
 
-export type QueryRevokeTokenArgs = {
-  id: Scalars['String'][]
-}
-
 export type Mutation = {
   __typename?: 'Mutation'
   /** Login with username and password to get the JWT token. */
   login: LoginOutput
   /** Create an API token to use in automated requests. */
   createToken: CreateTokenOutput
+  /** Revoke a set of API tokens that belongs to the user. */
+  revokeToken: RevokeTokenOutput
+  /** Update session token data that belongs to a user. */
+  updateToken: UpdateTokenOutput
 }
 
 export type MutationLoginArgs = {
@@ -138,4 +134,8 @@ export type MutationLoginArgs = {
 
 export type MutationCreateTokenArgs = {
   description?: Maybe<Scalars['String']>
+}
+
+export type MutationRevokeTokenArgs = {
+  id: Scalars['String'][]
 }
