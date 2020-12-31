@@ -6,4 +6,4 @@ import { MigrationTask } from './migration.task'
   providers: [ MigrationTask ],
   exports: [ MigrationTask ]
 })
-export class MigrationModule {}
+export class MigrationTaskModule {}

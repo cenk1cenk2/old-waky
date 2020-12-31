@@ -12,35 +12,36 @@ import { TimeoutTaskDefaults } from '@waky/api/task/defaults/task.constants'
 export class DefaultUserTask extends NestSchedule {
   private readonly logger: Logger = new Logger(this.constructor.name)
 
-  constructor (@InjectRepository(UserEntity) private readonly repository: Repository<UserEntity>) {
+  constructor (@InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>) {
     super()
   }
 
   @Timeout(0, TimeoutTaskDefaults)
   @UseLocker(MaintenanceLocker)
   @Configurable()
-  async createDefaultUser (
+  public async createDefaultUser (
     @ConfigParam('defaults.username') username: string,
       @ConfigParam('defaults.password') password: string
   ): Promise<boolean> {
     try {
-      const users = await this.repository.findAndCount()
-
-      const user = plainToClass(
-        UserEntity,
-        new UserEntity({
-          username,
-          password
-        })
-      )
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [ users, userCount ] = await this.userRepository.findAndCount()
 
       // if no users exists
-      if (users[1] === 0) {
+      if (userCount === 0) {
         this.logger.log(
           'No user has been found. An default user has been created with username: "admin", password: "admin".'
         )
 
-        await this.repository.save(user)
+        const user = plainToClass(
+          UserEntity,
+          new UserEntity({
+            username,
+            password
+          })
+        )
+
+        await this.userRepository.save(user)
 
         return true
       }

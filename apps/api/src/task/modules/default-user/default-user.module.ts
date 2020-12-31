@@ -9,4 +9,4 @@ import { UserEntity } from '@waky/api/entities/user.entity'
   providers: [ DefaultUserTask ],
   exports: [ DefaultUserTask ]
 })
-export class DefaultUserModule {}
+export class DefaultUserTaskModule {}

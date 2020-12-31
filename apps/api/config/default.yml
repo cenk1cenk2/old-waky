@@ -15,6 +15,7 @@ token:
   expiry: 1h
   key: ./volumes/app.key
   bits: 128
+  session-cleanup: 10
 
 frontend:
   dir: static
