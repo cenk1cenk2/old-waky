@@ -59,6 +59,11 @@ export type LoginOutput = {
   user: UserEntity
 }
 
+export type CreateTokenOutput = {
+  __typename?: 'CreateTokenOutput'
+  token: Scalars['String']
+}
+
 export type PaginationOutput = {
   __typename?: 'PaginationOutput'
   limit: Scalars['Int']
@@ -72,6 +77,12 @@ export type GetUserSessionsOutput = {
   pagination: PaginationOutput
 }
 
+export type GetMachineSessionsOutput = {
+  __typename?: 'GetMachineSessionsOutput'
+  result: Maybe<MachineSessionEntity>[]
+  pagination: PaginationOutput
+}
+
 export type PaginationArgsInput = {
   limit?: Maybe<Scalars['Int']>
   page?: Maybe<Scalars['Int']>
@@ -81,18 +92,28 @@ export type Query = {
   __typename?: 'Query'
   hello: Scalars['String']
   getUserSessions: GetUserSessionsOutput
+  getMachineSessions: GetMachineSessionsOutput
 }
 
 export type QueryGetUserSessionsArgs = {
   pagination?: Maybe<PaginationArgsInput>
 }
 
+export type QueryGetMachineSessionsArgs = {
+  pagination?: Maybe<PaginationArgsInput>
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   login: LoginOutput
+  createToken: CreateTokenOutput
 }
 
 export type MutationLoginArgs = {
   username: Scalars['String']
   password?: Maybe<Scalars['String']>
+}
+
+export type MutationCreateTokenArgs = {
+  description?: Maybe<Scalars['String']>
 }

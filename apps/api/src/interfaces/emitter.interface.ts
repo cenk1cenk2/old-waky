@@ -1,7 +1,8 @@
+import { MachineSessionEntity } from '../entities/machine-session.entity'
 import { DecodedToken } from './decoded-token.interface'
 import { Events } from './events.interface'
 import { GraphQLContext } from './graphql-context.interface'
-import { EventMap, EventRequest, EventResponse, EventManager, BaseEventMap } from '@cenk1cenk2/nestjs-emitter'
+import { BaseEventMap, EventManager, EventMap, EventRequest, EventResponse } from '@cenk1cenk2/nestjs-emitter'
 import { UserEntity } from '@waky/api/entities/user.entity'
 
 /**
@@ -12,7 +13,7 @@ export declare class WakyEventMap extends BaseEventMap implements EventMap<Event
     request: { req: GraphQLContext['req'], token: string }
   };
   [Events.CREATE_MACHINE_SESSION]: {
-    request: { token: string }
+    request: Pick<MachineSessionEntity, 'token' | 'description'>
   };
   [Events.SESSION_VERIFY]: {
     request: DecodedToken

@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { Exclude } from 'class-transformer'
-import { IsNotEmpty } from 'class-validator'
+import { IsNotEmpty, IsOptional } from 'class-validator'
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 
 import { BaseEntity } from './util'
@@ -24,6 +24,10 @@ export class MachineSessionEntity extends BaseEntity<MachineSessionEntity> imple
   @Column('varchar', { nullable: false })
   @Exclude({ toPlainOnly: true })
   key: string
+
+  @IsOptional()
+  @Column('varchar', { nullable: true })
+  description?: string
 
   // relations-incoming
   @ManyToOne(() => UserEntity, (user) => user.machineSessions)

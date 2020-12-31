@@ -91,7 +91,7 @@ export class SessionHandler {
     try {
       await this.machineSessionRepository.save(session)
 
-      this.logger.verbose(`Generated a API token for user id "${id}".`)
+      this.logger.verbose(`Generated an API token for user id "${id}".`)
     } catch (e) {
       throw new InternalServerErrorException(`Can not create a new API token. Please try again later. ${e}`)
     }

@@ -4,9 +4,15 @@ import { UserEntity } from '@waky/api/entities/user.entity'
 
 @ObjectType()
 export class LoginOutput {
-  @Field(() => String, { nullable: false })
+  @Field(() => String)
   token: string
 
   @Field(() => UserEntity)
   user: UserEntity
+}
+
+@ObjectType()
+export class CreateTokenOutput {
+  @Field(() => String)
+  token: string
 }

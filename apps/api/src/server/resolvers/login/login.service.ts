@@ -6,8 +6,8 @@ import * as bcrypt from 'bcryptjs'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 
-import { LoginInput } from './login.input'
-import { LoginOutput } from './login.output'
+import { CreateTokenInput, LoginInput } from './login.input'
+import { CreateTokenOutput, LoginOutput } from './login.output'
 import { EventManager } from '@cenk1cenk2/nestjs-emitter'
 import { UserEntity } from '@waky/api/entities/user.entity'
 import { WakyEventManager } from '@waky/api/interfaces/emitter.interface'
@@ -25,6 +25,13 @@ export class LoginService {
     private jwtService: JwtService
   ) {}
 
+  /**
+   * Login with a username and password.
+   *
+   * @param {LoginInput} args
+   * @returns  {Promise<LoginOutput>}
+   * @memberof LoginService
+   */
   public async login (args: LoginInput): Promise<LoginOutput> {
     // get user from database
     const user = await this.userRepository.findOne({ username: args.username })
@@ -35,7 +42,7 @@ export class LoginService {
     }
 
     // create token
-    const token = this.jwtService.sign({ id: user.id, key: uuidv4() })
+    const token = this.signToken(user)
 
     await this.emitter.emit(Events.USER_LOGIN, { req: this.context.req, token })
 
@@ -44,5 +51,33 @@ export class LoginService {
       token,
       user
     }
+  }
+
+  /**
+   * Create a machine token that could be used for automated requests.
+   *
+   * @param {UserEntity} user
+   * @returns  {Promise<void>}
+   * @memberof LoginService
+   */
+  public async createToken (user: UserEntity, args: CreateTokenInput): Promise<CreateTokenOutput> {
+    const token = this.signToken(user)
+
+    await this.emitter.emit(Events.CREATE_MACHINE_SESSION, { token, description: args.description })
+
+    return { token }
+  }
+
+  /**
+   * Sign a token with current user and generate a random key id for
+   * for further checks.
+   *
+   * @private
+   * @param {UserEntity} user
+   * @returns  {string}
+   * @memberof LoginService
+   */
+  private signToken (user: UserEntity): string {
+    return this.jwtService.sign({ id: user.id, key: uuidv4() })
   }
 }
