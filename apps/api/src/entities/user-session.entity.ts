@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql'
 import { Exclude } from 'class-transformer'
-import { IsNotEmpty } from 'class-validator'
+import { IsNotEmpty, IsOptional } from 'class-validator'
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
 
 import { BaseEntity } from './util'
@@ -22,14 +22,15 @@ export class UserSessionEntity extends BaseEntity<UserSessionEntity> implements 
 
   @IsNotEmpty()
   @Column('int', { nullable: false })
-  @Field(() => Date)
+  @Field(() => Number)
   exp: number
 
   @IsNotEmpty()
   @Column('int', { nullable: false })
-  @Field(() => Date)
+  @Field(() => Number)
   iat: number
 
+  @IsOptional()
   @Column('varchar', { nullable: false })
   @Field(() => String)
   ip: string
