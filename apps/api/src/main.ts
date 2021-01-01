@@ -1,7 +1,7 @@
-import { createApplication as createServerApplication } from './server/init'
+import { createApplication } from './init'
 
 function bootstrap (): Promise<void> {
-  return createServerApplication()
+  return createApplication()
 }
 
 bootstrap()

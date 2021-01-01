@@ -25,7 +25,6 @@ import * as resolvers from './resolvers'
 import { EventManagerModule } from '@cenk1cenk2/nestjs-emitter'
 import { ApplicationAuthGuard } from '@waky/api/guards/auth.guard'
 import { AuthGuardModule } from '@waky/api/guards/auth.guard.module'
-import { createTaskModule } from '@waky/api/task/task.module'
 
 export function createServerModule (mock = false): new (mock: boolean) => NestModule {
   @Module({
@@ -65,7 +64,6 @@ export function createServerModule (mock = false): new (mock: boolean) => NestMo
       MaintenanceModule,
       EventEmitterModule.forRoot(),
       EventManagerModule,
-      createTaskModule(),
       AuthGuardModule,
       SessionModule,
       ServeStaticModule.forRoot({

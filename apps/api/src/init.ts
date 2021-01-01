@@ -2,11 +2,11 @@ import { NestFactory } from '@nestjs/core'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import { ConfigService, SwaggerService } from '@webundsoehne/nestjs-util'
 
-import { createServerModule } from './server.module'
+import { AppModule } from './app.module'
 import { LoggerService } from '@cenk1cenk2/nestjs-utils'
 
 export async function createApplication (): Promise<void> {
-  const app = await NestFactory.create<NestFastifyApplication>(createServerModule(), new FastifyAdapter(), {
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
     logger: new LoggerService()
   })
 
