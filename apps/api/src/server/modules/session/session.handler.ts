@@ -49,7 +49,7 @@ export class SessionHandler {
       ip,
       location: location?.city && location?.country ? `${location.city}/${location.country}` : 'unknown',
       browser: `${browser.name} ${browser.version}`,
-      os: `${os.name}/${os.version}`
+      os: `${os.name} ${os.version}`
     }
 
     const session = new UserSessionEntity({

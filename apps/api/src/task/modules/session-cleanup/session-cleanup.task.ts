@@ -27,7 +27,7 @@ export class SessionCleanupTask extends NestSchedule {
         .execute()
 
       if (result?.affected > 0) {
-        this.logger.verbose(`Cleaned up expired ${result.affected} sessions.`)
+        this.logger.verbose(`Cleaned up ${result.affected} expired sessions.`)
       }
     } catch (error) {
       this.logger.error(error.message)
