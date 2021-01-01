@@ -12,8 +12,7 @@ import {
   InternalModule,
   MaintenanceMiddleware,
   MaintenanceModule,
-  SetApiInfoHeaderMiddleware,
-  setEnvironmentVariables
+  SetApiInfoHeaderMiddleware
 } from '@webundsoehne/nestjs-util'
 import { join } from 'path'
 
@@ -73,8 +72,6 @@ export function createServerModule (mock = false): new (mock: boolean) => NestMo
   })
   class ServerModule implements NestModule {
     async configure (consumer: MiddlewareConsumer): Promise<void> {
-      await setEnvironmentVariables()
-
       consumer
         .apply(MaintenanceMiddleware, SetApiInfoHeaderMiddleware)
         .forRoutes({ path: '*', method: RequestMethod.ALL })
