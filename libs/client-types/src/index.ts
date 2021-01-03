@@ -53,6 +53,11 @@ export type MachineSessionEntity = {
   user: UserEntity
 }
 
+export type CheckAuthenticationOutput = {
+  __typename?: 'CheckAuthenticationOutput'
+  result: Scalars['Boolean']
+}
+
 export type LoginOutput = {
   __typename?: 'LoginOutput'
   token: Scalars['String']
@@ -100,11 +105,17 @@ export type PaginationArgsInput = {
 
 export type Query = {
   __typename?: 'Query'
+  /** Check if current token is still valid. */
+  checkAuthentication: CheckAuthenticationOutput
   hello: Scalars['String']
   /** Get all currently logged in users. */
   getUserSessions: GetUserSessionsOutput
   /** Get all API tokens defined. */
   getMachineSessions: GetMachineSessionsOutput
+}
+
+export type QueryCheckAuthenticationArgs = {
+  token: Scalars['String']
 }
 
 export type QueryGetUserSessionsArgs = {

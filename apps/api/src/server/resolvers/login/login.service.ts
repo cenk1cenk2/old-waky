@@ -1,4 +1,4 @@
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common'
+import { ForbiddenException, Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { CONTEXT } from '@nestjs/graphql'
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -6,10 +6,11 @@ import * as bcrypt from 'bcryptjs'
 import { Repository } from 'typeorm'
 import { v4 as uuidv4 } from 'uuid'
 
-import { CreateTokenInput, LoginInput } from './login.input'
-import { CreateTokenOutput, LoginOutput } from './login.output'
+import { CreateTokenInput, LoginInput, CheckAuthenticationInput } from './login.input'
+import { CreateTokenOutput, LoginOutput, CheckAuthenticationOutput } from './login.output'
 import { EventManager } from '@cenk1cenk2/nestjs-emitter'
 import { UserEntity } from '@waky/api/entities/user.entity'
+import { DecodedToken } from '@waky/api/interfaces/decoded-token.interface'
 import { WakyEventManager } from '@waky/api/interfaces/emitter.interface'
 import { Events } from '@waky/api/interfaces/events.interface'
 import { GraphQLContext } from '@waky/api/interfaces/graphql-context.interface'
@@ -22,6 +23,19 @@ export class LoginService {
     @Inject(EventManager) private readonly emitter: WakyEventManager,
     private jwtService: JwtService
   ) {}
+
+  public async checkAuthentication (args: CheckAuthenticationInput): Promise<CheckAuthenticationOutput> {
+    try {
+      await this.emitter.emit(Events.SESSION_VERIFY, this.jwtService.decode(args.token) as DecodedToken)
+
+      return { result: true }
+    } catch (e) {
+      if (!(e instanceof UnauthorizedException)) {
+        throw e
+      }
+      return { result: false }
+    }
+  }
 
   /**
    * Login with a username and password.
@@ -36,7 +50,7 @@ export class LoginService {
 
     // check if user in database exists and database password matches
     if (!(user && await bcrypt.compare(args.password, user.hash ?? ''))) {
-      throw new ForbiddenException('Username or password does not match with any users.')
+      throw new ForbiddenException('Credentials does not match with any users.')
     }
 
     // create token

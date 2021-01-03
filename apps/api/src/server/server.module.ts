@@ -54,7 +54,8 @@ export function createServerModule (mock = false): new (mock: boolean) => NestMo
         useGlobalPrefix: true,
         playground: true,
         introspection: true,
-        path: '/graphql'
+        path: '/graphql',
+        installSubscriptionHandlers: true
       }),
       ...Object.values(modules),
       ...Object.values(resolvers),

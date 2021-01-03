@@ -1,0 +1,17 @@
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "attach",
+        "port": 9229,
+        "address": "localhost",
+        "localRoot": "${workspaceFolder}",
+        "remoteRoot": "/data/app",
+        "protocol": "inspector",
+        "sourceMaps": true,
+        "restart": true
+      }
+    }
+  }
+}

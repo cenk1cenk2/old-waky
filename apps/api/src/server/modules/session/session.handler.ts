@@ -108,23 +108,23 @@ export class SessionHandler {
   public async sessionVerify (
     e: WakyEventRequest<Events.SESSION_VERIFY>
   ): Promise<WakyEventResponse<Events.SESSION_VERIFY>> {
-    if (!e.machine) {
+    if (!e?.machine) {
       // check the expiry manually, because we dont want to check it for api tokens
-      if (new Date(Date.now()) > new Date(e.exp * 1000)) {
+      if (new Date(Date.now()) > new Date(e?.exp * 1000)) {
         throw new UnauthorizedException('Session has expired.')
       }
 
       // validate normal user login
       const entity = await this.userRepository
         .createQueryBuilder('user')
-        .where('user.id = :id', { id: e.id })
-        .innerJoin('user.userSessions', 'userSessions')
-        .andWhere('userSessions.key = :key', { key: e.key })
-        .andWhere('userSessions.iat = :iat', { iat: e.iat })
-        .andWhere('userSessions.exp = :exp', { exp: e.exp })
+        .where('user.id = :id', { id: e?.id })
+        .innerJoinAndSelect('user.userSessions', 'userSessions')
+        .andWhere('userSessions.key = :key', { key: e?.key })
+        .andWhere('userSessions.iat = :iat', { iat: e?.iat })
+        .andWhere('userSessions.exp = :exp', { exp: e?.exp })
         .getOne()
 
-      if (!entity) {
+      if (!entity?.userSessions || entity.userSessions.length !== 1) {
         throw new UnauthorizedException('Session token is not valid.')
       }
 
@@ -132,12 +132,12 @@ export class SessionHandler {
     } else {
       const entity = await this.userRepository
         .createQueryBuilder('user')
-        .where('user.id = :id', { id: e.id })
-        .innerJoin('user.machineSessions', 'machineSessions')
-        .andWhere('machineSessions.key =: key', { key: e.key })
+        .where('user.id = :id', { id: e?.id })
+        .innerJoinAndSelect('user.machineSessions', 'machineSessions')
+        .andWhere('machineSessions.key =: key', { key: e?.key })
         .getOne()
 
-      if (!entity) {
+      if (!entity?.userSessions || entity.userSessions.length !== 1) {
         throw new UnauthorizedException('API token is not valid.')
       }
 

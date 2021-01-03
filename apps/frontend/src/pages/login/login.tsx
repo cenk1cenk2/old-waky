@@ -1,35 +1,44 @@
 import { useMutation } from '@apollo/client'
 import { Pulldown } from '@cenk1cenk2/react-template-components'
-import { faExclamationCircle, faKey, faUser } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon, FontAwesomeIconProps } from '@fortawesome/react-fontawesome'
+import { faExclamationCircle, faKey, faSync, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ReactComponent as LogoImage } from '@frontend-assets/img/logo/logo.svg'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { Mutation, MutationLoginArgs } from '@waky/client-types'
 import { TextField } from '@waky/frontend/components/input/text-field.component'
+import { LocalStorage } from '@waky/frontend/interfaces'
 import { ClientQuery, ClientQueryMap } from '@waky/frontend/utils'
 import delay from 'delay'
 import { Form, Formik } from 'formik'
-import React, { Fragment, ReactElement, useState, useCallback } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useTheme } from 'styled-components'
 
 import { ShowMessageProps } from './login.interface'
 import { loginValidationSchema } from './login.util'
 
 export const LoginPage: React.FC = () => {
+  const history = useHistory()
   const [ credentials ] = useState<MutationLoginArgs>({ username: '', password: '' })
-  const [ message, setMessage ] = useState<ShowMessageProps>()
+  const location = useLocation<{ message: ShowMessageProps }>()
+  const [ message, setMessage ] = useState<ShowMessageProps>(location?.state?.message)
   const [ submitted, setSubmitted ] = useState<boolean>(false)
-  const [ login ] = useMutation<Mutation['login'], MutationLoginArgs>(ClientQueryMap[ClientQuery.USER_LOGIN])
+  const [ login ] = useMutation<Mutation, MutationLoginArgs>(ClientQueryMap[ClientQuery.USER_LOGIN])
 
   const handleSubmit = useCallback(
     async ({ username, password }: MutationLoginArgs) => {
       setSubmitted(true)
       try {
-        const { data, errors, context, extensions } = await login({ variables: { username, password } })
-        console.log(data, errors, context, extensions)
+        const { data } = await login({ variables: { username, password } })
+
+        localStorage.setItem(LocalStorage.TOKEN, data.login.token)
+
+        history.push('/')
       } catch (e) {
         setMessage({ type: 'error', message: e.message })
+
         setSubmitted(false)
+
         delay(3000).then(() => setMessage({}))
       }
     },
@@ -54,7 +63,11 @@ export const LoginPage: React.FC = () => {
                 <Typography variant="h3">waky</Typography>
               </Grid>
               <Grid item>
-                {!message?.message ? <DefaultMessage /> : <ShowMessage message={message.message} type={message.type} />}
+                {!message?.message ? (
+                  <ShowMessage message="Please provide your credentials." />
+                ) : (
+                  <ShowMessage message={message.message} type={message.type} />
+                )}
               </Grid>
             </Grid>
             <Grid item>
@@ -76,6 +89,7 @@ export const LoginPage: React.FC = () => {
                         id="username"
                         label="Username"
                         icon={faUser}
+                        disabled={submitted}
                       />
                     </Grid>
                     <Grid item>
@@ -87,13 +101,12 @@ export const LoginPage: React.FC = () => {
                         label="Password"
                         type="password"
                         icon={faKey}
+                        disabled={submitted}
                       />
                     </Grid>
-                    <Grid item>
-                      <Button fullWidth variant="contained" color="primary" type="submit" disabled={submitted}>
-                        Login
-                      </Button>
-                    </Grid>
+                    <Button fullWidth variant="contained" color="primary" type="submit" disabled={submitted}>
+                      <Typography>{!submitted ? 'Login' : <FontAwesomeIcon icon={faSync} spin />}</Typography>
+                    </Button>
                   </Grid>
                 </Form>
               </Formik>
@@ -103,10 +116,6 @@ export const LoginPage: React.FC = () => {
       </Pulldown>
     </Fragment>
   )
-}
-
-const DefaultMessage: React.FC = () => {
-  return <ShowMessage message="Please provide your credentials." />
 }
 
 const ShowMessage: React.FC<ShowMessageProps> = (props) => {
