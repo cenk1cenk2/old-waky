@@ -3,3 +3,4 @@ package:
   version: 1.0.0-development
 api:
   url: http://192.168.10.7:3000/graphql
+  poleInterval: 10000

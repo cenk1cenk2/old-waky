@@ -7,5 +7,6 @@ declare const CONFIG: {
   }
   api: {
     url: string
+    poleInterval: number
   }
 }

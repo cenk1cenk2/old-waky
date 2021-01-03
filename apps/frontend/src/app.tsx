@@ -14,6 +14,8 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components'
 
 import { ApiErrorPage } from './pages/api-error'
 import { LoginPage } from './pages/login'
+import { MainPage } from './pages/main'
+import NotFoundPage from './pages/not-found/not-found'
 
 const App: React.FC = () => {
   const theme = generateTheme({ palette: AvailablePalettes.DARK, design: AvailableDesigns.DEFAULT })
@@ -30,7 +32,7 @@ const App: React.FC = () => {
       variables: {
         token: localStorage.getItem(LocalStorage.TOKEN) ?? ''
       },
-      pollInterval: 1000
+      pollInterval: CONFIG.api.poleInterval
     }
   )
 
@@ -94,9 +96,11 @@ const App: React.FC = () => {
           <GlobalStyles />
           <CssBaseline />
           <Switch>
-            <Route path={Routes.LOGIN} component={LoginPage} />
-            <Route path={Routes.API_ERROR} component={ApiErrorPage} />
-            <Redirect to="/404" />
+            <Route exact path={Routes.MAIN_PAGE} component={MainPage} />
+            <Route exact path={Routes.LOGIN} component={LoginPage} />
+            <Route exact path={Routes.API_ERROR} component={ApiErrorPage} />
+            <Route exact path={Routes.NOT_FOUND} component={NotFoundPage} />
+            <Redirect to={Routes.NOT_FOUND} />
           </Switch>
         </StyledThemeProvider>
       </ThemeProvider>

@@ -1,6 +1,6 @@
 import { Pulldown } from '@cenk1cenk2/react-template-components'
 import { ReactComponent as LogoImage } from '@frontend-assets/img/logo/logo.svg'
-import { Button, Grid, Typography, useTheme } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import React, { Fragment } from 'react'
 
 export const ApiErrorPage: React.FC = () => {
