@@ -1,11 +1,11 @@
 import { useMutation } from '@apollo/client'
-import { Pulldown } from '@cenk1cenk2/react-template-components'
 import { faExclamationCircle, faKey, faSync, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ReactComponent as LogoImage } from '@frontend-assets/img/logo/logo.svg'
 import { Box, Button, Grid, Typography } from '@material-ui/core'
 import { Mutation, MutationLoginArgs } from '@waky/client-types'
 import { TextField } from '@waky/frontend/components/input/text-field.component'
+import { Pulldown } from '@waky/frontend/components/pulldown'
 import { LocalStorage } from '@waky/frontend/interfaces'
 import { ClientQuery, ClientQueryMap } from '@waky/frontend/utils'
 import delay from 'delay'
@@ -47,12 +47,7 @@ export const LoginPage: React.FC = () => {
 
   return (
     <Fragment>
-      <Pulldown
-        package={{ name: CONFIG.package.name, version: CONFIG.package.version }}
-        logo={LogoImage}
-        maxWidth="xs"
-        offset={{ x: 0, y: 0 }}
-      >
+      <Pulldown maxWidth="xs">
         <Box paddingLeft={4} paddingRight={4}>
           <Grid container direction="column" spacing={1} alignItems="stretch">
             <Grid container item direction="column" alignItems="center" spacing={2}>

@@ -1,17 +1,11 @@
-import { Pulldown } from '@cenk1cenk2/react-template-components'
-import { ReactComponent as LogoImage } from '@frontend-assets/img/logo/logo.svg'
 import { Grid, Typography } from '@material-ui/core'
+import { Pulldown } from '@waky/frontend/components/pulldown'
 import React, { Fragment } from 'react'
 
 export const ApiErrorPage: React.FC = () => {
   return (
     <Fragment>
-      <Pulldown
-        package={{ name: CONFIG.package.name, version: CONFIG.package.version }}
-        logo={LogoImage}
-        maxWidth="md"
-        offset={{ x: 0, y: 0 }}
-      >
+      <Pulldown maxWidth="md">
         <Grid container item alignItems="center" direction="column" spacing={0}>
           <Typography variant="h1" color="error">
             Can not reach the API.
